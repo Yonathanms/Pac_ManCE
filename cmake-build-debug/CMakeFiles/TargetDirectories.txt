@@ -1,0 +1,3 @@
+/home/yonathanms/Escritorio/Codigos/Pac_Man/cmake-build-debug/CMakeFiles/Pac_Man.dir
+/home/yonathanms/Escritorio/Codigos/Pac_Man/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/yonathanms/Escritorio/Codigos/Pac_Man/cmake-build-debug/CMakeFiles/rebuild_cache.dir
