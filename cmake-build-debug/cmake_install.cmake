@@ -1,4 +1,4 @@
-# Install script for directory: /home/yonathanms/Escritorio/Codigos/Pac_Man
+# Install script for directory: /home/yonathanms/Escritorio/Codigos/Pac_ManGIT
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/yonathanms/Escritorio/Codigos/Pac_Man/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/yonathanms/Escritorio/Codigos/Pac_ManGIT/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
