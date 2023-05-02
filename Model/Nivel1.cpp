@@ -11,6 +11,15 @@ Nivel1::Nivel1() {
     Vtn_Nivel1->setFramerateLimit(60);
     events = new Event;
 
+    textpm = new Texture;
+    pacman2 = new Sprite;
+
+    textpm->loadFromFile("../Recursos/FramesPacman.png");
+    pacman2->setTexture(*textpm);
+    pacman2->setScale(2.0, 2.0);
+    pacman2->setPosition(100,150);
+
+    movePM = true;
     num_framePM = 0;
 
     Ciclar();
@@ -21,15 +30,18 @@ void Nivel1::Renderizar() {
     Vtn_Nivel1->clear();
 
     Vtn_Nivel1->draw(GetSprPacman());
-    //SetFrame(GetSprPacman(),0);
+    Vtn_Nivel1->draw(*pacman2);
 
     Vtn_Nivel1->display();
 }
 
 void Nivel1::Ciclar() {
     while (Vtn_Nivel1->isOpen()){
-        Renderizar();
+        Colisiones();
         Eventos();
+        Renderizar();
+
+
     }
 }
 
@@ -38,12 +50,12 @@ void Nivel1::Eventos() {
         switch (events->type) {
             case Event::Closed:
                 Vtn_Nivel1->close();
-                std::cout << "Ventana facil cerrada de forma exitosa" << std::endl;
+                cout << "Ventana facil cerrada de forma exitosa" << endl;
                 exit(1);
 
             case Event::KeyPressed:
                 if (Keyboard::isKeyPressed(Keyboard::W)) {
-                    MovePM(0);
+                    MovePM(0, movePM);
                     SetFrame(num_framePM);
                     num_framePM++;
                     if(num_framePM==5){
@@ -52,7 +64,7 @@ void Nivel1::Eventos() {
 
                 }
                 else if (Keyboard::isKeyPressed(Keyboard::S)){
-                    MovePM(1);
+                    MovePM(1, movePM);
                     SetFrame(num_framePM);
                     num_framePM++;
                     if(num_framePM==5){
@@ -60,7 +72,7 @@ void Nivel1::Eventos() {
                     }
                 }
                 else if (Keyboard::isKeyPressed(Keyboard::A)) {
-                    MovePM(2);
+                    MovePM(2, movePM);
                     SetFrame(num_framePM);
                     num_framePM++;
                     if(num_framePM==5){
@@ -68,7 +80,7 @@ void Nivel1::Eventos() {
                     }
                 }
                 else if (Keyboard::isKeyPressed(Keyboard::D)){
-                    MovePM(3);
+                    MovePM(3, movePM);
                     SetFrame(num_framePM);
                     num_framePM++;
                     if(num_framePM==5){
@@ -77,4 +89,16 @@ void Nivel1::Eventos() {
                 }
         }
     }
+}
+
+void Nivel1::Colisiones() {
+
+    if (GetSprPacman().getGlobalBounds().intersects(pacman2->getGlobalBounds())){
+        movePM = false;
+        cout<<"colisiono"<<GetSprPacman().getPosition().x<<endl;
+    }
+    else{
+        movePM = true;
+    }
+
 }

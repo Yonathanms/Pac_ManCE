@@ -16,14 +16,14 @@ class Pac_Man {
 public:
     Pac_Man();
     Sprite GetSprPacman();
-    void MovePM(int num_direction);
+    void MovePM(int num_direction, bool move);
     void SetFrame( int num_frame);
 
 private:
     Sprite *spr_PacMan;
     Texture *txtr_PacMan;
 
-    int N_FramePM;
+
 };
 
 

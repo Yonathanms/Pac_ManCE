@@ -15,12 +15,17 @@ public:
     void Renderizar();
     void Ciclar();
     void Eventos();
+    void Colisiones();
 
 private:
     RenderWindow *Vtn_Nivel1;
     Event *events;
 
+    Sprite *pacman2;
+    Texture *textpm;
+
     int num_framePM;
+    bool movePM;
 };
 
 
