@@ -53,12 +53,27 @@ void Nivel1::Eventos() {
                 }
                 else if (Keyboard::isKeyPressed(Keyboard::S)){
                     MovePM(1);
+                    SetFrame(num_framePM);
+                    num_framePM++;
+                    if(num_framePM==5){
+                        num_framePM = 0;
+                    }
                 }
                 else if (Keyboard::isKeyPressed(Keyboard::A)) {
                     MovePM(2);
+                    SetFrame(num_framePM);
+                    num_framePM++;
+                    if(num_framePM==5){
+                        num_framePM = 0;
+                    }
                 }
                 else if (Keyboard::isKeyPressed(Keyboard::D)){
                     MovePM(3);
+                    SetFrame(num_framePM);
+                    num_framePM++;
+                    if(num_framePM==5){
+                        num_framePM = 0;
+                    }
                 }
         }
     }
