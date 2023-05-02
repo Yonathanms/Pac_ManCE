@@ -11,6 +11,7 @@ Nivel1::Nivel1() {
     Vtn_Nivel1->setFramerateLimit(60);
     events = new Event;
 
+    num_framePM = 0;
 
     Ciclar();
 
@@ -20,6 +21,7 @@ void Nivel1::Renderizar() {
     Vtn_Nivel1->clear();
 
     Vtn_Nivel1->draw(GetSprPacman());
+    //SetFrame(GetSprPacman(),0);
 
     Vtn_Nivel1->display();
 }
@@ -41,16 +43,22 @@ void Nivel1::Eventos() {
 
             case Event::KeyPressed:
                 if (Keyboard::isKeyPressed(Keyboard::W)) {
-                    MovePM(0);                                /// al apretar 'w' ingresa un '1' en la funcion de movimiento de la nave
+                    MovePM(0);
+                    SetFrame(num_framePM);
+                    num_framePM++;
+                    if(num_framePM==5){
+                        num_framePM = 0;
+                    }
+
                 }
-                if (Keyboard::isKeyPressed(Keyboard::S)){
-                    MovePM(1);                              /// al apretar 'w' ingresa un '0' en la funcion de movimiento de la nave
+                else if (Keyboard::isKeyPressed(Keyboard::S)){
+                    MovePM(1);
                 }
-                if (Keyboard::isKeyPressed(Keyboard::A)) {
-                    MovePM(2);                                /// al apretar 'w' ingresa un '1' en la funcion de movimiento de la nave
+                else if (Keyboard::isKeyPressed(Keyboard::A)) {
+                    MovePM(2);
                 }
-                if (Keyboard::isKeyPressed(Keyboard::D)){
-                    MovePM(3);                              /// al apretar 'w' ingresa un '0' en la funcion de movimiento de la nave
+                else if (Keyboard::isKeyPressed(Keyboard::D)){
+                    MovePM(3);
                 }
         }
     }

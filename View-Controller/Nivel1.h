@@ -19,6 +19,8 @@ public:
 private:
     RenderWindow *Vtn_Nivel1;
     Event *events;
+
+    int num_framePM;
 };
 
 
