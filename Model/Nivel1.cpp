@@ -9,15 +9,20 @@
 Nivel1::Nivel1() {
     Vtn_Nivel1 = new RenderWindow(VideoMode(950,1000),"Nivel 1");
     Vtn_Nivel1->setFramerateLimit(60);
+
     events = new Event;
 
-    textpm = new Texture;
-    pacman2 = new Sprite;
+    txtr_fondoV1 = new Texture;
+    sprt_fondoV1 = new Sprite;
 
-    textpm->loadFromFile("../Recursos/FramesPacman.png");
-    pacman2->setTexture(*textpm);
-    pacman2->setScale(2.0, 2.0);
-    pacman2->setPosition(100,150);
+
+    txtr_fondoV1->loadFromFile("../Recursos/FondoVtn1.png");
+    sprt_fondoV1->setTexture(*txtr_fondoV1);
+   //textpm->loadFromFile("../Recursos/FramesPacman.png");
+    //pacman2->setTexture(*textpm);
+  //  pacman2->setScale(2.0, 2.0);
+   // pacman2->setPosition(100,150);
+
 
     movePM = true;
     num_framePM = 0;
@@ -29,8 +34,9 @@ Nivel1::Nivel1() {
 void Nivel1::Renderizar() {
     Vtn_Nivel1->clear();
 
+    Vtn_Nivel1->draw(*sprt_fondoV1);
     Vtn_Nivel1->draw(GetSprPacman());
-    Vtn_Nivel1->draw(*pacman2);
+    //Vtn_Nivel1->draw(*pacman2);
 
     Vtn_Nivel1->display();
 }
@@ -93,12 +99,17 @@ void Nivel1::Eventos() {
 
 void Nivel1::Colisiones() {
 
-    if (GetSprPacman().getGlobalBounds().intersects(pacman2->getGlobalBounds())){
-        movePM = false;
-        cout<<"colisiono"<<GetSprPacman().getPosition().x<<endl;
-    }
-    else{
-        movePM = true;
-    }
+   // if (GetSprPacman().getGlobalBounds().intersects(pacman2->getGlobalBounds())){
+       // movePM = false;
+       // cout<<"colisiono"<<GetSprPacman().getPosition().x<<endl;
+   // }
+   // else{
+       // movePM = true;
+  //  }
+
+}
+
+void Nivel1::barreras() {
+    
 
 }

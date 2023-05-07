@@ -16,13 +16,15 @@ public:
     void Ciclar();
     void Eventos();
     void Colisiones();
+    void barreras();
 
 private:
     RenderWindow *Vtn_Nivel1;
     Event *events;
 
-    Sprite *pacman2;
-    Texture *textpm;
+    Sprite *sprt_fondoV1;
+    Texture *txtr_fondoV1;
+
 
     int num_framePM;
     bool movePM;
