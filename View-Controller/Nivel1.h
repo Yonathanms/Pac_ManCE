@@ -18,7 +18,7 @@ public:
     void Eventos();
     void Colisiones();
     void barreras();
-    void puntos(RenderWindow, Sprite, Vector2f);
+
 
 private:
     RenderWindow *Vtn_Nivel1;
@@ -82,7 +82,7 @@ private:
     RectangleShape *rctngl_Barrera1_55;
     RectangleShape *rctngl_Barrera1_56;
     RectangleShape *rctngl_Barrera1_57;
-    RectangleShape *rctngl_Barrera1_58;
+
 
     //----------
     Sprite *sprt_fondoV1;
@@ -92,7 +92,13 @@ private:
     Texture *txtr_punto1;
 
     vector <Sprite> vSprites;
-    int y;
+    vector <Vector2f> vPosiciones;
+    vector <int> vPosicion_punto_x;
+    vector <int> vPosicion_punto_y;
+
+    int indice_posicion;
+    int pos_punto_x;
+    int pos_punto_y;
 
     int num_framePM;
     bool movePM;

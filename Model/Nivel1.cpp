@@ -20,19 +20,51 @@ Nivel1::Nivel1() {
 
     sprt_punto1 = new Sprite;
     txtr_punto1 = new Texture;
-    txtr_punto1->loadFromFile("../Recursos/punto7.png");
+    txtr_punto1->loadFromFile("../Recursos/punto8.png");
     sprt_punto1->setTexture(*txtr_punto1);
-   // sprt_punto1->setPosition(104,128);
+    sprt_punto1->setPosition(108,133);
     movePM = true;
     num_framePM = 0;
 
-    vSprites = {5,*sprt_punto1};
-    y = 0;
+  // Vector2f posicion(108.0f,133.0f);
 
-    for (auto& sprt_punto1 : vSprites){
-        sprt_punto1.setPosition(104,y);
-        y += 100;
+
+    vSprites = {252,*sprt_punto1};
+    vPosicion_punto_x = {0,1,2,3,4,5,6,7,8,9,10,11,14,15,16,17,18,19,20,21,22,23,24,0,5,11,14,20,25,
+                         0,5,11,14,20,25,0,5,11,14,20,25,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
+                         17,18,19,20,21,22,23,24,25,0,5,8,17,20,25,0,5,8,17,20,25,0,1,2,3,4,5,8,9,
+                         10,11,14,15,16,17,20,21,22,23,24,25,5,20,5,20,5,20,5,20,5,20,0,1,2,3,4,5,
+                         20,21,22,23,24,25,5,20,5,20,5,20,5,20,5,20,0,1,2,3,4,5,6,7,8,9,10,11,14,15,
+                         16,17,18,19,20,21,22,23,24,25,0,5,11,14,20,25,0,5,11,14,20,25,0,1,2,5,6,7,8,
+                         9,10,11,12,13,14,15,16,17,18,19,20,23,24,25,2,5,8,17,20,23,2,5,8,17,20,23,
+                         0,1,2,3,4,5,8,9,10,11,14,15,16,17,20,21,22,23,24,25,0,11,14,25,0,11,14,25,
+                         1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};  ///representan las columnas
+
+    vPosicion_punto_y = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28}; ///representan las filas
+    indice_posicion = 0;
+
+    while (vPosiciones.size() != 252){
+        vPosicion_punto_x.erase(vPosicion_punto_x.begin());
+        vPosiciones.push_back({static_cast<float>(108+28.4*vPosicion_punto_x[0]) ,static_cast<float>(133+28.4*vPosicion_punto_y[0])});
+        cout<<"tamano del vector vPosiciones = " << vPosiciones.size() << endl;
+        cout << "tamano del vector vPosicion_punto_x = "<< vPosicion_punto_x.size()<< endl;
+        if (vPosicion_punto_x[0]>vPosicion_punto_x[1]){
+            vPosicion_punto_y.erase(vPosicion_punto_y.begin());
+        }
+
     }
+
+    /// posiciona todos los puntos del mapa
+    for (auto& sprt_punto1 : vSprites ){
+        if(indice_posicion<252){
+            sprt_punto1.setPosition(vPosiciones[indice_posicion]);
+            indice_posicion += 1;
+            cout << "posicion x = " << vPosiciones[indice_posicion].x<<" Posicion y = "<<vPosiciones[indice_posicion].y<<endl;
+            cout << "valor de i "<< indice_posicion <<endl;
+        }
+    }
+
+
     barreras();
     Ciclar();
 
@@ -110,7 +142,7 @@ void Nivel1::Eventos() {
 }
 
 void Nivel1::Colisiones() {
-
+    ///funcion que detecta cuando el pacaman choca con alguna barrera, no permite que este pase mas alla
     if (GetSprPacman().getGlobalBounds().intersects(rctngl_Barrera1_1->getGlobalBounds()) or
         GetSprPacman().getGlobalBounds().intersects(rctngl_Barrera1_2->getGlobalBounds()) or
         GetSprPacman().getGlobalBounds().intersects(rctngl_Barrera1_3->getGlobalBounds()) or
@@ -167,19 +199,28 @@ void Nivel1::Colisiones() {
         GetSprPacman().getGlobalBounds().intersects(rctngl_Barrera1_54->getGlobalBounds()) or
         GetSprPacman().getGlobalBounds().intersects(rctngl_Barrera1_55->getGlobalBounds()) or
         GetSprPacman().getGlobalBounds().intersects(rctngl_Barrera1_56->getGlobalBounds()) or
-        GetSprPacman().getGlobalBounds().intersects(rctngl_Barrera1_57->getLocalBounds())){
+        GetSprPacman().getGlobalBounds().intersects(rctngl_Barrera1_57->getLocalBounds())) {
         movePM = false;
-        cout<<"colisiono"<<GetSprPacman().getPosition().x<<endl;
-    }
-    else{
+        cout << "colisiono" << GetSprPacman().getPosition().x << endl;
+    } else {
         movePM = true;
     }
 
+    /// funcion que elimina los puntos del vector segun el pacman los va comiendo, una vez no hayan puntos en el mapa, termina el nivel
     for (int i = 0; i < vSprites.size(); ++i) {
-        if (GetSprPacman().getGlobalBounds().intersects(vSprites[i].getGlobalBounds())){
-            vSprites[i].setPosition(-100,-100);
+        if (GetSprPacman().getGlobalBounds().intersects(vSprites[i].getGlobalBounds())) {
+            if(vSprites.size()>0){
+                vSprites.erase(vSprites.begin() + i);
+                cout << "punto = " << i << " eliminado" << endl;
+                cout << vSprites.size() << endl;
+            }
+            if (vSprites.size() == 0){
+                cout<< "Ventana cerrada con exito" <<endl;
+                Vtn_Nivel1->close();
+            }
         }
     }
+
 }
 
 void Nivel1::barreras() {
@@ -414,8 +455,6 @@ void Nivel1::barreras() {
     rctngl_Barrera1_57->setSize(Vector2f (61,10));
 }
 
-void Nivel1::puntos(RenderWindow, Sprite, Vector2f) {
 
-}
 
 
