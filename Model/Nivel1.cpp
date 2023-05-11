@@ -14,20 +14,26 @@ Nivel1::Nivel1() {
 
     txtr_fondoV1 = new Texture;
     sprt_fondoV1 = new Sprite;
-
-
     txtr_fondoV1->loadFromFile("../Recursos/FondoVtn1.png");
     sprt_fondoV1->setTexture(*txtr_fondoV1);
     sprt_fondoV1->setPosition(75,100);
-   //textpm->loadFromFile("../Recursos/FramesPacman.png");
-    //pacman2->setTexture(*textpm);
-  //  pacman2->setScale(2.0, 2.0);
-   // pacman2->setPosition(100,150);
 
-    barreras();
+    sprt_punto1 = new Sprite;
+    txtr_punto1 = new Texture;
+    txtr_punto1->loadFromFile("../Recursos/punto7.png");
+    sprt_punto1->setTexture(*txtr_punto1);
+   // sprt_punto1->setPosition(104,128);
     movePM = true;
     num_framePM = 0;
 
+    vSprites = {5,*sprt_punto1};
+    y = 0;
+
+    for (auto& sprt_punto1 : vSprites){
+        sprt_punto1.setPosition(104,y);
+        y += 100;
+    }
+    barreras();
     Ciclar();
 
 }
@@ -36,11 +42,13 @@ void Nivel1::Renderizar() {
     Vtn_Nivel1->clear();
 
     Vtn_Nivel1->draw(*sprt_fondoV1);
-    //-------
+
+
+    for (auto& sprt_punto1 : vSprites){
+        Vtn_Nivel1->draw(sprt_punto1);
+    }
 
     Vtn_Nivel1->draw(GetSprPacman());
-
-    //Vtn_Nivel1->draw(*pacman2);
 
     Vtn_Nivel1->display();
 }
@@ -159,7 +167,7 @@ void Nivel1::Colisiones() {
         GetSprPacman().getGlobalBounds().intersects(rctngl_Barrera1_54->getGlobalBounds()) or
         GetSprPacman().getGlobalBounds().intersects(rctngl_Barrera1_55->getGlobalBounds()) or
         GetSprPacman().getGlobalBounds().intersects(rctngl_Barrera1_56->getGlobalBounds()) or
-        GetSprPacman().getGlobalBounds().intersects(rctngl_Barrera1_57->getGlobalBounds())){
+        GetSprPacman().getGlobalBounds().intersects(rctngl_Barrera1_57->getLocalBounds())){
         movePM = false;
         cout<<"colisiono"<<GetSprPacman().getPosition().x<<endl;
     }
@@ -167,6 +175,11 @@ void Nivel1::Colisiones() {
         movePM = true;
     }
 
+    for (int i = 0; i < vSprites.size(); ++i) {
+        if (GetSprPacman().getGlobalBounds().intersects(vSprites[i].getGlobalBounds())){
+            vSprites[i].setPosition(-100,-100);
+        }
+    }
 }
 
 void Nivel1::barreras() {
@@ -400,3 +413,9 @@ void Nivel1::barreras() {
     rctngl_Barrera1_57->setPosition(504,458);
     rctngl_Barrera1_57->setSize(Vector2f (61,10));
 }
+
+void Nivel1::puntos(RenderWindow, Sprite, Vector2f) {
+
+}
+
+

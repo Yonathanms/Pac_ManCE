@@ -5,6 +5,7 @@
 #ifndef PAC_MAN_NIVEL1_H
 #include "SFML/Graphics.hpp"
 #include "../View-Controller/Pac_Man.h"
+#include "vector"
 #define PAC_MAN_NIVEL1_H
 
 using namespace sf;
@@ -17,12 +18,13 @@ public:
     void Eventos();
     void Colisiones();
     void barreras();
+    void puntos(RenderWindow, Sprite, Vector2f);
 
 private:
     RenderWindow *Vtn_Nivel1;
     Event *events;
 
-    // sprites y texturas para los muros
+    // Rectangulos de los muros
     RectangleShape *rctngl_Barrera1_1;
     RectangleShape *rctngl_Barrera1_2;
     RectangleShape *rctngl_Barrera1_3;
@@ -86,6 +88,11 @@ private:
     Sprite *sprt_fondoV1;
     Texture *txtr_fondoV1;
 
+    Sprite *sprt_punto1;
+    Texture *txtr_punto1;
+
+    vector <Sprite> vSprites;
+    int y;
 
     int num_framePM;
     bool movePM;
