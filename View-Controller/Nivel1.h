@@ -91,15 +91,21 @@ private:
     Sprite *sprt_punto1;
     Texture *txtr_punto1;
 
+    Sprite *sprt_PM_vidas1;
+    Sprite *sprt_PM_vidas2;
+    Sprite *sprt_PM_vidas3;
+
+    Font *fuente;
+    Text *txt_Puntajetxt;
+    Text *txt_Puntajeint;
+
     vector <Sprite> vSprites;
     vector <Vector2f> vPosiciones;
     vector <int> vPosicion_punto_x;
     vector <int> vPosicion_punto_y;
 
     int indice_posicion;
-    int pos_punto_x;
-    int pos_punto_y;
-
+    int num_puntuacion_total;
     int num_framePM;
     bool movePM;
 };

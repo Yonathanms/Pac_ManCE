@@ -10,6 +10,8 @@ Nivel1::Nivel1() {
     Vtn_Nivel1 = new RenderWindow(VideoMode(950,1000),"Nivel 1");
     Vtn_Nivel1->setFramerateLimit(60);
 
+    num_puntuacion_total = 0;
+
     events = new Event;
 
     txtr_fondoV1 = new Texture;
@@ -20,16 +22,33 @@ Nivel1::Nivel1() {
 
     sprt_punto1 = new Sprite;
     txtr_punto1 = new Texture;
-    txtr_punto1->loadFromFile("../Recursos/punto8.png");
+    txtr_punto1->loadFromFile("../Recursos/punto.png");
     sprt_punto1->setTexture(*txtr_punto1);
-    sprt_punto1->setPosition(108,133);
+    sprt_punto1->setOrigin(10.0,10.0);
+
+    fuente = new Font();
+    fuente->loadFromFile("../Recursos/DSChocolade.ttf");
+
+    txt_Puntajetxt = new Text();
+    txt_Puntajetxt->setFont(*fuente);
+    txt_Puntajetxt->setString("Puntaje:");
+    txt_Puntajetxt->setPosition(180,30);
+    txt_Puntajetxt->setLetterSpacing(1.5);
+    txt_Puntajetxt->setScale(1.2,1.2);
+
+    txt_Puntajeint = new Text();
+    txt_Puntajeint->setFont(*fuente);
+    txt_Puntajeint->setString(to_string(num_puntuacion_total));
+    txt_Puntajeint->setPosition(340,30);
+    txt_Puntajeint->setLetterSpacing(2);
+    txt_Puntajeint->setScale(1.2 , 1.2);
+    txt_Puntajeint->setFillColor(Color :: Yellow);
+
     movePM = true;
     num_framePM = 0;
 
-  // Vector2f posicion(108.0f,133.0f);
-
-
     vSprites = {252,*sprt_punto1};
+
     vPosicion_punto_x = {0,1,2,3,4,5,6,7,8,9,10,11,14,15,16,17,18,19,20,21,22,23,24,0,5,11,14,20,25,
                          0,5,11,14,20,25,0,5,11,14,20,25,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
                          17,18,19,20,21,22,23,24,25,0,5,8,17,20,25,0,5,8,17,20,25,0,1,2,3,4,5,8,9,
@@ -43,9 +62,10 @@ Nivel1::Nivel1() {
     vPosicion_punto_y = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28}; ///representan las filas
     indice_posicion = 0;
 
+    /// agrega las posiciones de los puntos en el vector "vPosiciones"
     while (vPosiciones.size() != 252){
         vPosicion_punto_x.erase(vPosicion_punto_x.begin());
-        vPosiciones.push_back({static_cast<float>(108+28.4*vPosicion_punto_x[0]) ,static_cast<float>(133+28.4*vPosicion_punto_y[0])});
+        vPosiciones.push_back({static_cast<float>(118+28.4*vPosicion_punto_x[0]) ,static_cast<float>(143+28.4*vPosicion_punto_y[0])});
         cout<<"tamano del vector vPosiciones = " << vPosiciones.size() << endl;
         cout << "tamano del vector vPosicion_punto_x = "<< vPosicion_punto_x.size()<< endl;
         if (vPosicion_punto_x[0]>vPosicion_punto_x[1]){
@@ -54,7 +74,7 @@ Nivel1::Nivel1() {
 
     }
 
-    /// posiciona todos los puntos del mapa
+    /// posiciona todos los puntos del mapa con el vector de posiciones
     for (auto& sprt_punto1 : vSprites ){
         if(indice_posicion<252){
             sprt_punto1.setPosition(vPosiciones[indice_posicion]);
@@ -80,6 +100,8 @@ void Nivel1::Renderizar() {
         Vtn_Nivel1->draw(sprt_punto1);
     }
 
+    Vtn_Nivel1->draw(*txt_Puntajetxt);
+    Vtn_Nivel1->draw(*txt_Puntajeint);
     Vtn_Nivel1->draw(GetSprPacman());
 
     Vtn_Nivel1->display();
@@ -211,6 +233,7 @@ void Nivel1::Colisiones() {
         if (GetSprPacman().getGlobalBounds().intersects(vSprites[i].getGlobalBounds())) {
             if(vSprites.size()>0){
                 vSprites.erase(vSprites.begin() + i);
+                txt_Puntajeint->setString(to_string(num_puntuacion_total+=10));
                 cout << "punto = " << i << " eliminado" << endl;
                 cout << vSprites.size() << endl;
             }
