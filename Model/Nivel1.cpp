@@ -10,9 +10,20 @@ Nivel1::Nivel1() {
     Vtn_Nivel1 = new RenderWindow(VideoMode(950,1000),"Nivel 1");
     Vtn_Nivel1->setFramerateLimit(60);
 
+    tiempoFramePU = new Time;
+    relojFramePU = new Clock;
+
     num_puntuacion_total = 0;
 
     events = new Event;
+
+    txtr_PowerUp = new Texture;
+    sprt_PowerUp = new Sprite;
+    txtr_PowerUp->loadFromFile("../Recursos/powerup1.png");
+    sprt_PowerUp->setTexture(*txtr_PowerUp);
+    sprt_PowerUp->setPosition(146,230);
+    sprt_PowerUp->setOrigin(17,17);
+
 
     txtr_fondoV1 = new Texture;
     sprt_fondoV1 = new Sprite;
@@ -46,6 +57,7 @@ Nivel1::Nivel1() {
 
     movePM = true;
     num_framePM = 0;
+    num_framePU = 0;
 
     vSprites = {252,*sprt_punto1};
 
@@ -102,6 +114,7 @@ void Nivel1::Renderizar() {
 
     Vtn_Nivel1->draw(*txt_Puntajetxt);
     Vtn_Nivel1->draw(*txt_Puntajeint);
+    Vtn_Nivel1->draw(*sprt_PowerUp);
     Vtn_Nivel1->draw(GetSprPacman());
 
     Vtn_Nivel1->display();
@@ -111,6 +124,7 @@ void Nivel1::Ciclar() {
     while (Vtn_Nivel1->isOpen()){
         Colisiones();
         Eventos();
+        SetFramePU(num_framePU);
         Renderizar();
 
 
@@ -476,6 +490,25 @@ void Nivel1::barreras() {
 
     rctngl_Barrera1_57->setPosition(504,458);
     rctngl_Barrera1_57->setSize(Vector2f (61,10));
+}
+
+void Nivel1::SetFramePU(int num_frames) {
+    *tiempoFramePU = relojFramePU->getElapsedTime();
+    if (num_frames <= 8){
+        if (num_frames<8){
+
+            if(tiempoFramePU->asMilliseconds()<36 and tiempoFramePU->asMilliseconds() > 17.0){
+                IntRect coordenadas(num_frames*33.75,0,33.75,33.75);
+                num_framePU++;
+                sprt_PowerUp->setTextureRect(coordenadas);
+            }
+            if(tiempoFramePU->asMilliseconds()>36.1){
+                relojFramePU->restart();
+            }
+        } else{
+            num_framePU = 0;
+        }
+    }
 }
 
 

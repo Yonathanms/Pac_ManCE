@@ -18,11 +18,16 @@ public:
     void Eventos();
     void Colisiones();
     void barreras();
+    void SetFramePU(int num_frames);
+
 
 
 private:
     RenderWindow *Vtn_Nivel1;
     Event *events;
+
+    Time *tiempoFramePU;
+    Clock *relojFramePU;
 
     // Rectangulos de los muros
     RectangleShape *rctngl_Barrera1_1;
@@ -95,6 +100,9 @@ private:
     Sprite *sprt_PM_vidas2;
     Sprite *sprt_PM_vidas3;
 
+    Sprite *sprt_PowerUp;
+    Texture *txtr_PowerUp;
+
     Font *fuente;
     Text *txt_Puntajetxt;
     Text *txt_Puntajeint;
@@ -107,6 +115,7 @@ private:
     int indice_posicion;
     int num_puntuacion_total;
     int num_framePM;
+    int num_framePU;
     bool movePM;
 };
 

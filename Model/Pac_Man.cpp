@@ -70,13 +70,10 @@ void Pac_Man::MovePM(int num_direction, bool move) {
                 spr_PacMan->move(-10.0, 0.0);
             }
         }
-       // else if (num_direction == 1){
-            //spr_PacMan->move(0.0, -10.0);
-       // }
     }
 }
 
-
+///metodo que divide es sprite del pacman en sprites mas pequenos
 void Pac_Man::SetFrame( int num_frame) {
     IntRect coordenadas(num_frame*40,0,40,40);
     spr_PacMan->setTextureRect(coordenadas);
