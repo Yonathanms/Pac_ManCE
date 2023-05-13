@@ -56,8 +56,10 @@ Nivel1::Nivel1() {
     txt_Puntajeint->setFillColor(Color :: Yellow);
 
     movePM = true;
+    MostrarPU = false;
     num_framePM = 0;
     num_framePU = 0;
+    num_comparacionPU = 0;
 
     vSprites = {252,*sprt_punto1};
 
@@ -69,9 +71,12 @@ Nivel1::Nivel1() {
                          16,17,18,19,20,21,22,23,24,25,0,5,11,14,20,25,0,5,11,14,20,25,0,1,2,5,6,7,8,
                          9,10,11,12,13,14,15,16,17,18,19,20,23,24,25,2,5,8,17,20,23,2,5,8,17,20,23,
                          0,1,2,3,4,5,8,9,10,11,14,15,16,17,20,21,22,23,24,25,0,11,14,25,0,11,14,25,
-                         1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};  ///representan las columnas
+                         1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};  ///representan las columnas donde apareceran los puntos
 
-    vPosicion_punto_y = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28}; ///representan las filas
+    vPosicion_punto_y = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28}; ///representan las filas donde apareceran los puntos
+
+    vPos_xPU = {0,25};
+    vPos_yPU = {0,28};
     indice_posicion = 0;
 
     /// agrega las posiciones de los puntos en el vector "vPosiciones"
@@ -115,6 +120,7 @@ void Nivel1::Renderizar() {
     Vtn_Nivel1->draw(*txt_Puntajetxt);
     Vtn_Nivel1->draw(*txt_Puntajeint);
     Vtn_Nivel1->draw(*sprt_PowerUp);
+    Vtn_Nivel1->draw(GetFtsm1());
     Vtn_Nivel1->draw(GetSprPacman());
 
     Vtn_Nivel1->display();
@@ -125,7 +131,9 @@ void Nivel1::Ciclar() {
         Colisiones();
         Eventos();
         SetFramePU(num_framePU);
+        Power_up(MostrarPU);
         Renderizar();
+
 
 
     }
@@ -147,6 +155,8 @@ void Nivel1::Eventos() {
                     if(num_framePM==5){
                         num_framePM = 0;
                     }
+
+
 
                 }
                 else if (Keyboard::isKeyPressed(Keyboard::S)){
@@ -245,12 +255,25 @@ void Nivel1::Colisiones() {
     /// funcion que elimina los puntos del vector segun el pacman los va comiendo, una vez no hayan puntos en el mapa, termina el nivel
     for (int i = 0; i < vSprites.size(); ++i) {
         if (GetSprPacman().getGlobalBounds().intersects(vSprites[i].getGlobalBounds())) {
+
             if(vSprites.size()>0){
+                num_comparacionPU+=10;
                 vSprites.erase(vSprites.begin() + i);
                 txt_Puntajeint->setString(to_string(num_puntuacion_total+=10));
-                cout << "punto = " << i << " eliminado" << endl;
+                cout << "num_comparacion = " << num_comparacionPU << " eliminado" << endl;
                 cout << vSprites.size() << endl;
+
+                if (num_comparacionPU==200){
+                    pos_xPU = rand() % 2-0;
+                    pos_yPU = rand() % 2-0;
+                    MostrarPU = true;
+                }
+
+                if(num_comparacionPU>200){
+                    MostrarPU = true;
+                }
             }
+
             if (vSprites.size() == 0){
                 cout<< "Ventana cerrada con exito" <<endl;
                 Vtn_Nivel1->close();
@@ -258,6 +281,10 @@ void Nivel1::Colisiones() {
         }
     }
 
+    if (GetSprPacman().getGlobalBounds().intersects(sprt_PowerUp->getGlobalBounds())){
+        MostrarPU = false;
+        num_comparacionPU = 0;
+    }
 }
 
 void Nivel1::barreras() {
@@ -492,6 +519,7 @@ void Nivel1::barreras() {
     rctngl_Barrera1_57->setSize(Vector2f (61,10));
 }
 
+///esta funcion recorre los sprites del power up y lo actualiza por tiempo definido
 void Nivel1::SetFramePU(int num_frames) {
     *tiempoFramePU = relojFramePU->getElapsedTime();
     if (num_frames <= 8){
@@ -508,6 +536,15 @@ void Nivel1::SetFramePU(int num_frames) {
         } else{
             num_framePU = 0;
         }
+    }
+}
+
+/// oculta y mestra el sprite del power up
+void Nivel1::Power_up(bool mostrar) {
+    if (mostrar == false){
+        sprt_PowerUp->setPosition(-100,-100);
+    }else{
+        sprt_PowerUp->setPosition({static_cast<float>(118+28.4*vPos_xPU[pos_xPU]) ,static_cast<float>(143+28.4*vPos_yPU[pos_yPU])});
     }
 }
 

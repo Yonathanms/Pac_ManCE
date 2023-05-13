@@ -5,12 +5,14 @@
 #ifndef PAC_MAN_NIVEL1_H
 #include "SFML/Graphics.hpp"
 #include "../View-Controller/Pac_Man.h"
+#include "../View-Controller/Fantasma1.h"
 #include "vector"
+#include "stdlib.h"
 #define PAC_MAN_NIVEL1_H
 
 using namespace sf;
 
-class Nivel1: public Pac_Man{
+class Nivel1: public Pac_Man, public Fantasma1{
 public:
     Nivel1();
     void Renderizar();
@@ -19,6 +21,8 @@ public:
     void Colisiones();
     void barreras();
     void SetFramePU(int num_frames);
+    void Power_up(bool mostrar);
+    
 
 
 
@@ -111,12 +115,18 @@ private:
     vector <Vector2f> vPosiciones;
     vector <int> vPosicion_punto_x;
     vector <int> vPosicion_punto_y;
+    vector <int> vPos_xPU;
+    vector <int> vPos_yPU;
 
     int indice_posicion;
     int num_puntuacion_total;
     int num_framePM;
     int num_framePU;
+    int pos_xPU;
+    int pos_yPU;
+    int num_comparacionPU;
     bool movePM;
+    bool MostrarPU;
 };
 
 
