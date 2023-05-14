@@ -22,7 +22,9 @@ public:
     void barreras();
     void SetFramePU(int num_frames);
     void Power_up(bool mostrar);
-    
+    void Poder_Activo(bool poderactivo);
+
+
 
 
 
@@ -32,6 +34,8 @@ private:
 
     Time *tiempoFramePU;
     Clock *relojFramePU;
+    Time *tiempoPoderactivo;
+    Clock *relojPoderactivo;
 
     // Rectangulos de los muros
     RectangleShape *rctngl_Barrera1_1;
@@ -127,6 +131,7 @@ private:
     int num_comparacionPU;
     bool movePM;
     bool MostrarPU;
+    bool VulnerabilidadFtsm1;
 };
 
 

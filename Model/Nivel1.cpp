@@ -12,6 +12,8 @@ Nivel1::Nivel1() {
 
     tiempoFramePU = new Time;
     relojFramePU = new Clock;
+    tiempoPoderactivo = new Time;
+    relojPoderactivo = new Clock;
 
     num_puntuacion_total = 0;
 
@@ -57,6 +59,7 @@ Nivel1::Nivel1() {
 
     movePM = true;
     MostrarPU = false;
+    VulnerabilidadFtsm1 = false;
     num_framePM = 0;
     num_framePU = 0;
     num_comparacionPU = 0;
@@ -132,6 +135,11 @@ void Nivel1::Ciclar() {
         Eventos();
         SetFramePU(num_framePU);
         Power_up(MostrarPU);
+        SetFrameFtsm1(VulnerabilidadFtsm1);
+        cout<< "Vulnerabilidad " << VulnerabilidadFtsm1 << endl;
+        cout<<"Tiempo poder activo= "<<tiempoPoderactivo->asSeconds()<<" segundos"<<endl;
+        cout<<"Reloj poder activo= "<<relojPoderactivo->getElapsedTime().asSeconds()<<" segundos"<<endl;
+        Poder_Activo(VulnerabilidadFtsm1);
         Renderizar();
 
 
@@ -260,8 +268,8 @@ void Nivel1::Colisiones() {
                 num_comparacionPU+=10;
                 vSprites.erase(vSprites.begin() + i);
                 txt_Puntajeint->setString(to_string(num_puntuacion_total+=10));
-                cout << "num_comparacion = " << num_comparacionPU << " eliminado" << endl;
-                cout << vSprites.size() << endl;
+              //  cout << "num_comparacion = " << num_comparacionPU << " eliminado" << endl;
+                //cout << vSprites.size() << endl;
 
                 if (num_comparacionPU==200){
                     pos_xPU = rand() % 2-0;
@@ -283,7 +291,19 @@ void Nivel1::Colisiones() {
 
     if (GetSprPacman().getGlobalBounds().intersects(sprt_PowerUp->getGlobalBounds())){
         MostrarPU = false;
+        VulnerabilidadFtsm1 = true;
         num_comparacionPU = 0;
+        relojPoderactivo->restart();
+        cout<< "Vulnerabilidad " << VulnerabilidadFtsm1 << endl;
+
+
+
+    }
+
+    if (GetSprPacman().getGlobalBounds().intersects((GetFtsm1().getGlobalBounds()))){
+        if(VulnerabilidadFtsm1 == false){
+
+        }
     }
 }
 
@@ -545,6 +565,17 @@ void Nivel1::Power_up(bool mostrar) {
         sprt_PowerUp->setPosition(-100,-100);
     }else{
         sprt_PowerUp->setPosition({static_cast<float>(118+28.4*vPos_xPU[pos_xPU]) ,static_cast<float>(143+28.4*vPos_yPU[pos_yPU])});
+    }
+}
+
+/// Mantiene el poder de comer fantasmas por un tiempo establecido
+void Nivel1::Poder_Activo(bool poderactivo) {
+    if(poderactivo== true){
+        *tiempoPoderactivo = relojPoderactivo->getElapsedTime();
+        if (tiempoPoderactivo->asSeconds()>=10){
+            cout<<"holaaaaaa"<<endl;
+            VulnerabilidadFtsm1 = false;
+        }
     }
 }
 

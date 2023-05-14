@@ -27,32 +27,32 @@ void Pac_Man::MovePM(int num_direction, bool move) {
         spr_PacMan->move(0.0, -8.0);
         spr_PacMan->setRotation(270.0);
         spr_PacMan->setScale(1.0f, 1.0f);
-        cout << "x= " << spr_PacMan->getPosition().x<< endl;
-        cout << "y= " << spr_PacMan->getPosition().y<< endl;
+       // cout << "x= " << spr_PacMan->getPosition().x<< endl;
+        //cout << "y= " << spr_PacMan->getPosition().y<< endl;
     }
 
     if (num_direction == 1 and move == true) {
         spr_PacMan->move(0.0, 8.0);
         spr_PacMan->setRotation(90.0);
         spr_PacMan->setScale(1.0f, 1.0f);
-        cout << "x= " << spr_PacMan->getPosition().x<< endl;
-        cout << "y= " << spr_PacMan->getPosition().y<< endl;
+       // cout << "x= " << spr_PacMan->getPosition().x<< endl;
+        //cout << "y= " << spr_PacMan->getPosition().y<< endl;
     }
 
     if (num_direction == 2 and move == true) {
         spr_PacMan->move(-8.0, 0.0);
         spr_PacMan->setRotation(180.0);
         spr_PacMan->setScale(1.0f, -1.0f);
-        cout << "x= " << spr_PacMan->getPosition().x<< endl;
-        cout << "y= " << spr_PacMan->getPosition().y<< endl;
+       // cout << "x= " << spr_PacMan->getPosition().x<< endl;
+       // cout << "y= " << spr_PacMan->getPosition().y<< endl;
     }
 
     if (num_direction == 3 and move == true) {
         spr_PacMan->move(8.0, 0.0);
         spr_PacMan->setRotation(0.0);
         spr_PacMan->setScale(1.0f, 1.0f);
-        cout << "x= " << spr_PacMan->getPosition().x<< endl;
-        cout << "y= " << spr_PacMan->getPosition().y<< endl;
+        //cout << "x= " << spr_PacMan->getPosition().x<< endl;
+       // cout << "y= " << spr_PacMan->getPosition().y<< endl;
     }
 
     if (move == false){

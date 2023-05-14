@@ -16,10 +16,16 @@ class Fantasma1 {
 public:
     Fantasma1();
     Sprite GetFtsm1();
+    void  SetFrameFtsm1(bool vulnerabilidad);
 private:
+
+    Time *tiempo_FrameFtsm1;
+    Clock *reloj_FrameFtsm1;
 
     Sprite *sprt_ftsm1;
     Texture *txtr_ftsm1;
+
+    int num_frameFtsm1;
 
 };
 
