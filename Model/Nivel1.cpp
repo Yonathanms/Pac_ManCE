@@ -29,7 +29,7 @@ Nivel1::Nivel1() {
 
     txtr_fondoV1 = new Texture;
     sprt_fondoV1 = new Sprite;
-    txtr_fondoV1->loadFromFile("../Recursos/FondoVtn1.png");
+    txtr_fondoV1->loadFromFile("../Recursos/FondoVtn2.png");
     sprt_fondoV1->setTexture(*txtr_fondoV1);
     sprt_fondoV1->setPosition(75,100);
 
@@ -86,8 +86,8 @@ Nivel1::Nivel1() {
     while (vPosiciones.size() != 252){
         vPosicion_punto_x.erase(vPosicion_punto_x.begin());
         vPosiciones.push_back({static_cast<float>(118+28.4*vPosicion_punto_x[0]) ,static_cast<float>(143+28.4*vPosicion_punto_y[0])});
-        cout<<"tamano del vector vPosiciones = " << vPosiciones.size() << endl;
-        cout << "tamano del vector vPosicion_punto_x = "<< vPosicion_punto_x.size()<< endl;
+      //  cout<<"tamano del vector vPosiciones = " << vPosiciones.size() << endl;
+       // cout << "tamano del vector vPosicion_punto_x = "<< vPosicion_punto_x.size()<< endl;
         if (vPosicion_punto_x[0]>vPosicion_punto_x[1]){
             vPosicion_punto_y.erase(vPosicion_punto_y.begin());
         }
@@ -99,8 +99,8 @@ Nivel1::Nivel1() {
         if(indice_posicion<252){
             sprt_punto1.setPosition(vPosiciones[indice_posicion]);
             indice_posicion += 1;
-            cout << "posicion x = " << vPosiciones[indice_posicion].x<<" Posicion y = "<<vPosiciones[indice_posicion].y<<endl;
-            cout << "valor de i "<< indice_posicion <<endl;
+           // cout << "posicion x = " << vPosiciones[indice_posicion].x<<" Posicion y = "<<vPosiciones[indice_posicion].y<<endl;
+          //  cout << "valor de i "<< indice_posicion <<endl;
         }
     }
 
@@ -136,9 +136,9 @@ void Nivel1::Ciclar() {
         SetFramePU(num_framePU);
         Power_up(MostrarPU);
         SetFrameFtsm1(VulnerabilidadFtsm1);
-        cout<< "Vulnerabilidad " << VulnerabilidadFtsm1 << endl;
-        cout<<"Tiempo poder activo= "<<tiempoPoderactivo->asSeconds()<<" segundos"<<endl;
-        cout<<"Reloj poder activo= "<<relojPoderactivo->getElapsedTime().asSeconds()<<" segundos"<<endl;
+       // cout<< "Vulnerabilidad " << VulnerabilidadFtsm1 << endl;
+       // cout<<"Tiempo poder activo= "<<tiempoPoderactivo->asSeconds()<<" segundos"<<endl;
+       // cout<<"Reloj poder activo= "<<relojPoderactivo->getElapsedTime().asSeconds()<<" segundos"<<endl;
         Poder_Activo(VulnerabilidadFtsm1);
         Renderizar();
 
@@ -157,7 +157,7 @@ void Nivel1::Eventos() {
 
             case Event::KeyPressed:
                 if (Keyboard::isKeyPressed(Keyboard::W)) {
-                    MovePM(0, movePM);
+                   // MovePM(0, movePM);
                     SetFrame(num_framePM);
                     num_framePM++;
                     if(num_framePM==5){
@@ -168,7 +168,7 @@ void Nivel1::Eventos() {
 
                 }
                 else if (Keyboard::isKeyPressed(Keyboard::S)){
-                    MovePM(1, movePM);
+                   // MovePM(1, movePM);
                     SetFrame(num_framePM);
                     num_framePM++;
                     if(num_framePM==5){
@@ -176,7 +176,7 @@ void Nivel1::Eventos() {
                     }
                 }
                 else if (Keyboard::isKeyPressed(Keyboard::A)) {
-                    MovePM(2, movePM);
+                    //MovePM(2, movePM);
                     SetFrame(num_framePM);
                     num_framePM++;
                     if(num_framePM==5){
@@ -184,7 +184,8 @@ void Nivel1::Eventos() {
                     }
                 }
                 else if (Keyboard::isKeyPressed(Keyboard::D)){
-                    MovePM(3, movePM);
+                    //MovePM(3, movePM);
+                    MovePM2(3,GetPosPacman());
                     SetFrame(num_framePM);
                     num_framePM++;
                     if(num_framePM==5){
