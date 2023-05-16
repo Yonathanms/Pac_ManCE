@@ -14,7 +14,7 @@ Fantasma1::Fantasma1() {
     //txtr_ftsm1->loadFromFile("../Recursos/Fantasma1.png");
     sprt_ftsm1->setTexture(*txtr_ftsm1);
     sprt_ftsm1->setOrigin(19,19);
-    sprt_ftsm1->setPosition(100,200);
+    sprt_ftsm1->setPosition(518,493);
 
     num_frameFtsm1 = 0;
 }
