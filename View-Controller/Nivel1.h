@@ -69,7 +69,6 @@ private:
     int pos_xPU;
     int pos_yPU;
     int num_comparacionPU;
-    bool movePM;
     bool MostrarPU;
     bool VulnerabilidadFtsm1;
 };

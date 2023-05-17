@@ -57,7 +57,6 @@ Nivel1::Nivel1() {
     txt_Puntajeint->setScale(1.2 , 1.2);
     txt_Puntajeint->setFillColor(Color :: Yellow);
 
-    movePM = true;
     MostrarPU = false;
     VulnerabilidadFtsm1 = false;
     num_framePM = 0;
@@ -66,7 +65,7 @@ Nivel1::Nivel1() {
 
     vSprites = {252,*sprt_punto1};
 
-    vPosicion_punto_x = {0,1,2,3,4,5,6,7,8,9,10,11,14,15,16,17,18,19,20,21,22,23,24,0,5,11,14,20,25,
+    vPosicion_punto_x = {1,2,3,4,5,6,7,8,9,10,11,14,15,16,17,18,19,20,21,22,23,24,0,5,11,14,20,25,
                        0,5,11,14,20,25,0,5,11,14,20,25,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
                        17,18,19,20,21,22,23,24,25,0,5,8,17,20,25,0,5,8,17,20,25,0,1,2,3,4,5,8,9,
                        10,11,14,15,16,17,20,21,22,23,24,25,5,20,5,20,5,20,5,20,5,20,0,1,2,3,4,5,
@@ -80,9 +79,12 @@ Nivel1::Nivel1() {
 
     while (vPosiciones.size() != 252){
 
-      vPosicion_punto_x.erase(vPosicion_punto_x.begin());
+      //vPosicion_punto_x.erase(vPosicion_punto_x.begin());
       vPosiciones.push_back({98+30*vPosicion_punto_x[0] ,103+30*vPosicion_punto_y[0]});
-      if (vPosicion_punto_x[0]>vPosicion_punto_x[1]){
+      vPosicion_punto_x.erase(vPosicion_punto_x.begin());
+      if (vPosicion_punto_x[0]>=vPosicion_punto_x[1]){
+          vPosiciones.push_back({98+30*vPosicion_punto_x[0] ,103+30*vPosicion_punto_y[0]});
+          vPosicion_punto_x.erase(vPosicion_punto_x.begin());
           vPosicion_punto_y.erase(vPosicion_punto_y.begin());
           }
     }
