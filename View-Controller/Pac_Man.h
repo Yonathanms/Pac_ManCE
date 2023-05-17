@@ -19,6 +19,10 @@ public:
     Sprite GetSprPacman();
     void SetFrame( int num_frame);
     void MovePM(int num_direction);
+    bool PuedeMoverse(const Vector2i &posicionActual, const vector<Vector2i> &celdasPermitidas, Vector2i coordenadas_move);
+    int Reduccion_VidasPM(bool defensa);
+    int Get_NumVidasPM();
+    void SetNewPosition_PM(bool kill, vector<Vector2i> Posiciones, int num_celdas);
 
 private:
     Sprite *spr_PacMan;
@@ -27,9 +31,8 @@ private:
     vector <int> vPosicionCelda_x;
     vector <int> vPosicionCelda_y;
     vector <Vector2i> vPosicionCelda_xy;
-   // Vector2f vectorPosActualPM;
 
-   int indicevPos_xy;
+    int num_vidasPM;
 };
 
 

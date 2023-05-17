@@ -44,9 +44,8 @@ private:
     Sprite *sprt_punto1;
     Texture *txtr_punto1;
 
-    Sprite *sprt_PM_vidas1;
-    Sprite *sprt_PM_vidas2;
-    Sprite *sprt_PM_vidas3;
+    Sprite *sprt_PM_vidas;
+    Texture *txtr_PM_vidas;
 
     Sprite *sprt_PowerUp;
     Texture *txtr_PowerUp;
@@ -54,6 +53,8 @@ private:
     Font *fuente;
     Text *txt_Puntajetxt;
     Text *txt_Puntajeint;
+    Text *txt_Vidastxt;
+    Text *txt_Vidasint;
 
     vector <Sprite> vSprites;
     vector <Vector2i> vPosiciones;
@@ -71,6 +72,7 @@ private:
     int num_comparacionPU;
     bool MostrarPU;
     bool VulnerabilidadFtsm1;
+    bool Tiempo_SpawnFtsm1;
 };
 
 

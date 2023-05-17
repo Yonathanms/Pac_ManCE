@@ -26,6 +26,13 @@ Nivel1::Nivel1() {
     sprt_PowerUp->setPosition(-146,-230);
     sprt_PowerUp->setOrigin(17,17);
 
+    txtr_PM_vidas = new Texture;
+    sprt_PM_vidas = new Sprite;
+    txtr_PM_vidas->loadFromFile("../Recursos/PacManKill.png");
+    sprt_PM_vidas->setTexture(*txtr_PM_vidas);
+    sprt_PM_vidas->setPosition(695,14);
+ //   sprt_PM_vidas->setOrigin(20,20);
+
 
     txtr_fondoV1 = new Texture;
     sprt_fondoV1 = new Sprite;
@@ -42,23 +49,39 @@ Nivel1::Nivel1() {
     fuente = new Font();
     fuente->loadFromFile("../Recursos/DSChocolade.ttf");
 
-    txt_Puntajetxt = new Text();
+    txt_Puntajetxt = new Text;
     txt_Puntajetxt->setFont(*fuente);
     txt_Puntajetxt->setString("Puntaje:");
-    txt_Puntajetxt->setPosition(180,10);
+    txt_Puntajetxt->setPosition(160,10);
     txt_Puntajetxt->setLetterSpacing(1.5);
     txt_Puntajetxt->setScale(1.2,1.2);
 
-    txt_Puntajeint = new Text();
+    txt_Puntajeint = new Text;
     txt_Puntajeint->setFont(*fuente);
     txt_Puntajeint->setString(to_string(num_puntuacion_total));
-    txt_Puntajeint->setPosition(340,10);
+    txt_Puntajeint->setPosition(320,10);
     txt_Puntajeint->setLetterSpacing(2);
     txt_Puntajeint->setScale(1.2 , 1.2);
     txt_Puntajeint->setFillColor(Color :: Yellow);
 
+    txt_Vidastxt = new Text;
+    txt_Vidastxt->setFont(*fuente);
+    txt_Vidastxt->setString("Vidas:");
+    txt_Vidastxt->setPosition(500,10);
+    txt_Vidastxt->setLetterSpacing(1.5);
+    txt_Vidastxt->setScale(1.2,1.2);
+
+    txt_Vidasint = new Text;
+    txt_Vidasint->setFont(*fuente);
+    txt_Vidasint->setString(to_string(Get_NumVidasPM()) + " x");
+    txt_Vidasint->setPosition(620,10);
+    txt_Vidasint->setLetterSpacing(1.5);
+    txt_Vidasint->setScale(1.2,1.2);
+    txt_Vidasint->setFillColor(Color :: Yellow);
+
     MostrarPU = false;
     VulnerabilidadFtsm1 = false;
+    Tiempo_SpawnFtsm1 = false;
     num_framePM = 0;
     num_framePU = 0;
     num_comparacionPU = 0;
@@ -119,7 +142,10 @@ void Nivel1::Renderizar() {
 
     Vtn_Nivel1->draw(*txt_Puntajetxt);
     Vtn_Nivel1->draw(*txt_Puntajeint);
+    Vtn_Nivel1->draw(*txt_Vidastxt);
     Vtn_Nivel1->draw(*sprt_PowerUp);
+    Vtn_Nivel1->draw(*txt_Vidasint);
+    Vtn_Nivel1->draw(*sprt_PM_vidas);
     Vtn_Nivel1->draw(GetFtsm1());
     Vtn_Nivel1->draw(GetSprPacman());
 
@@ -133,11 +159,13 @@ void Nivel1::Ciclar() {
         SetFramePU(num_framePU);
         Power_up(MostrarPU);
         SetFrameFtsm1(VulnerabilidadFtsm1);
-        cout<< "Vulnerabilidad " << VulnerabilidadFtsm1 << endl;
-        cout<<"Tiempo poder activo= "<<tiempoPoderactivo->asSeconds()<<" segundos"<<endl;
+      //  cout<< "Vulnerabilidad " << VulnerabilidadFtsm1 << endl;
+        //cout<<"Tiempo poder activo= "<<tiempoPoderactivo->asSeconds()<<" segundos"<<endl;
        // cout<<"Reloj poder activo= "<<relojPoderactivo->getElapsedTime().asSeconds()<<" segundos"<<endl;
         Poder_Activo(VulnerabilidadFtsm1);
+        RespawnFtsm1(Tiempo_SpawnFtsm1, (Vector2<int> &&) GetFtsm1().getPosition(), vPosiciones, 252);
         Renderizar();
+        txt_Vidasint->setString(to_string(Get_NumVidasPM()) + " x"); ///actualiza el numero de vidas
 
 
 
@@ -182,8 +210,6 @@ void Nivel1::Eventos() {
                     }
                 }
                 else if (Keyboard::isKeyPressed(Keyboard::D)){
-                    //MovePM(3, movePM);
-                    //MovePM2(3,GetPosPacman());
                     MovePM(3);
                     SetFrame(num_framePM);
                     num_framePM++;
@@ -231,15 +257,23 @@ void Nivel1::Colisiones() {
         VulnerabilidadFtsm1 = true;
         num_comparacionPU = 0;
         relojPoderactivo->restart();
-        cout<< "Vulnerabilidad " << VulnerabilidadFtsm1 << endl;
-
+       // cout<< "Vulnerabilidad " << VulnerabilidadFtsm1 << endl;
 
 
     }
-
+    ////////// esta funcion determina lo que sucede si interaccionan el pacman y el fantasma
     if (GetSprPacman().getGlobalBounds().intersects((GetFtsm1().getGlobalBounds()))){
         if(VulnerabilidadFtsm1 == false){
-
+            if(Reduccion_VidasPM(VulnerabilidadFtsm1) > 0){
+                cout << "xd"<<endl;
+                SetNewPosition_PM(VulnerabilidadFtsm1, vPosiciones,252);
+            } else{
+                cout<< "GAME OVER"<<endl;
+                Vtn_Nivel1->close();
+            }
+        }else{
+            Tiempo_SpawnFtsm1 = true;
+            cout<<"Totalmente inmune" << endl;
         }
     }
 }
@@ -278,8 +312,8 @@ void Nivel1::Power_up(bool mostrar) {
 void Nivel1::Poder_Activo(bool poderactivo) {
     if(poderactivo== true){
         *tiempoPoderactivo = relojPoderactivo->getElapsedTime();
-        if (tiempoPoderactivo->asSeconds()>=10){
-            cout<<"holaaaaaa"<<endl;
+        if (tiempoPoderactivo->asSeconds()>=12){
+           // cout<<"holaaaaaa"<<endl;
             VulnerabilidadFtsm1 = false;
         }
     }

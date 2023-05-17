@@ -10,7 +10,7 @@ Pac_Man::Pac_Man() {
 
     txtr_PacMan->loadFromFile("../Recursos/FramesPacman.png");
     spr_PacMan->setTexture(*txtr_PacMan);
-    spr_PacMan->setPosition(188,103);
+    spr_PacMan->setPosition(488,583);
     spr_PacMan->setOrigin(20,20);
 
     ///posiciones donde se puede mover
@@ -32,7 +32,7 @@ Pac_Man::Pac_Man() {
     while (vPosicionCelda_xy.size() != 318){
         vPosicionCelda_xy.push_back({98+30*vPosicionCelda_x[0] ,103+30*vPosicionCelda_y[0]});
         vPosicionCelda_x.erase(vPosicionCelda_x.begin());
-        cout << vPosicionCelda_xy[0].x<<vPosicionCelda_xy[0].y << endl;
+       // cout << vPosicionCelda_xy[0].x<<vPosicionCelda_xy[0].y << endl;
         if (vPosicionCelda_x[0]>=vPosicionCelda_x[1]){
             vPosicionCelda_xy.push_back({98+30*vPosicionCelda_x[0] ,103+30*vPosicionCelda_y[0]});
             vPosicionCelda_x.erase(vPosicionCelda_x.begin());
@@ -41,9 +41,7 @@ Pac_Man::Pac_Man() {
     }
 
     SetFrame(0);
-
-    indicevPos_xy = 0;
-
+    num_vidasPM = 3;
 }
 
 Sprite Pac_Man::GetSprPacman() {
@@ -59,16 +57,16 @@ void Pac_Man::SetFrame( int num_frame) {
 }
 
 
-bool PuedeMoverse(const Vector2i & posicionActual, const vector<Vector2i>& celdasPermitidas, Vector2i coordenadas_move) {
+bool Pac_Man::PuedeMoverse(const Vector2i & posicionActual, const vector<Vector2i>& celdasPermitidas, Vector2i coordenadas_move) {
     Vector2i nuevaPosicion = posicionActual + coordenadas_move;
     for (const auto& celda : celdasPermitidas) {
         if (nuevaPosicion == celda) {
-            cout <<"v resultante=  "<< nuevaPosicion.x<<"x ,"<<nuevaPosicion.y<<"y"<< endl;
-            cout <<"v contenido en vPosiciones_xy =  "<< celda.x<<"x ,"<<celda.y<<"y"<< endl;
+           // cout <<"v resultante=  "<< nuevaPosicion.x<<"x ,"<<nuevaPosicion.y<<"y"<< endl;
+           // cout <<"v contenido en vPosiciones_xy =  "<< celda.x<<"x ,"<<celda.y<<"y"<< endl;
             return true;
         } else{
-            cout <<"v resultante error =  "<< nuevaPosicion.x<<"x ,"<<nuevaPosicion.y<<"y"<< endl;
-            cout <<"v contenido en vPosiciones_xy error =  "<< celda.x<<"x ,"<<celda.y<<"y"<< endl;
+           // cout <<"v resultante error =  "<< nuevaPosicion.x<<"x ,"<<nuevaPosicion.y<<"y"<< endl;
+           // cout <<"v contenido en vPosiciones_xy error =  "<< celda.x<<"x ,"<<celda.y<<"y"<< endl;
         }
     }
     return false;
@@ -91,8 +89,8 @@ void Pac_Man::MovePM(int num_direction) {
             spr_PacMan->move(0, 30);
             spr_PacMan->setRotation(90.0);
             spr_PacMan->setScale(1.0f, 1.0f);
-            cout << "posicion pacman " << spr_PacMan->getPosition().x << "x ," << spr_PacMan->getPosition().y << "y"
-                 << endl;
+           // cout << "posicion pacman " << spr_PacMan->getPosition().x << "x ," << spr_PacMan->getPosition().y << "y"
+                // << endl;
         }
     }
 
@@ -112,6 +110,30 @@ void Pac_Man::MovePM(int num_direction) {
             spr_PacMan->setRotation(0.0);
             spr_PacMan->setScale(1.0f, 1.0f);
         }
+    }
+}
+
+int Pac_Man::Reduccion_VidasPM(bool defensa) {
+    if (defensa == true) {
+        cout << num_vidasPM << " = numero de vidas"<<endl;
+        return num_vidasPM;
+
+    }else{
+        num_vidasPM--;
+        cout << num_vidasPM << " = numero de vidas"<<endl;
+        return num_vidasPM;
+    }
+}
+
+int Pac_Man::Get_NumVidasPM() {
+    return num_vidasPM;
+}
+
+void Pac_Man::SetNewPosition_PM(bool kill, vector<Vector2i> Posiciones, int num_celdas) {
+    if (kill == false){
+       int indice_posrandom = rand()% num_celdas;
+       cout << indice_posrandom << "= num random 1"<<endl;
+       spr_PacMan->setPosition(Posiciones[indice_posrandom].x,Posiciones[indice_posrandom].y);
     }
 }
 
