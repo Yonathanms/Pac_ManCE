@@ -35,6 +35,8 @@ private:
     Clock *relojFramePU;
     Time *tiempoPoderactivo;
     Clock *relojPoderactivo;
+    Time *tiempo_spawnFtsm;
+    Clock *reloj_spawnFtsm;
 
 
     //----------
@@ -56,6 +58,8 @@ private:
     Text *txt_Vidastxt;
     Text *txt_Vidasint;
 
+    Vector2f coord_posFtsm1;
+
     vector <Sprite> vSprites;
     vector <Vector2i> vPosiciones;
     vector <int> vPosicion_punto_x;
@@ -69,6 +73,7 @@ private:
     int num_framePU;
     int pos_xPU;
     int pos_yPU;
+    int indice_randomSpawnFtsm1;
     int num_comparacionPU;
     bool MostrarPU;
     bool VulnerabilidadFtsm1;

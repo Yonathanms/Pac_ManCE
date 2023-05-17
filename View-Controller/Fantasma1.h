@@ -16,8 +16,9 @@ class Fantasma1 {
 public:
     Fantasma1();
     Sprite GetFtsm1();
+    Sprite GetSprt_killFtsm1();
     void  SetFrameFtsm1(bool vulnerabilidad);
-    void RespawnFtsm1(bool kill_ftsm, Vector2i PosFtsm, vector <Vector2i> PosCeldas, int num_celdas);
+    void RespawnFtsm1(bool Ftsm_herido,Clock relojinicial,Vector2f coord_posFtsm1, vector <Vector2i> PosCeldas, int num_random);
 private:
 
     Time *tiempo_FrameFtsm1;

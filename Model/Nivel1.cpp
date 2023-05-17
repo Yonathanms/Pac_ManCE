@@ -14,6 +14,8 @@ Nivel1::Nivel1() {
     relojFramePU = new Clock;
     tiempoPoderactivo = new Time;
     relojPoderactivo = new Clock;
+    tiempo_spawnFtsm = new Time;
+    reloj_spawnFtsm = new Clock;
 
     num_puntuacion_total = 0;
 
@@ -85,6 +87,8 @@ Nivel1::Nivel1() {
     num_framePM = 0;
     num_framePU = 0;
     num_comparacionPU = 0;
+    indice_randomSpawnFtsm1 = 0;
+    coord_posFtsm1 = {-20.0,-20.0};
 
     vSprites = {252,*sprt_punto1};
 
@@ -146,8 +150,11 @@ void Nivel1::Renderizar() {
     Vtn_Nivel1->draw(*sprt_PowerUp);
     Vtn_Nivel1->draw(*txt_Vidasint);
     Vtn_Nivel1->draw(*sprt_PM_vidas);
+  //  Vtn_Nivel1->draw(GetSprt_killFtsm1());
     Vtn_Nivel1->draw(GetFtsm1());
+    Vtn_Nivel1->draw(GetSprt_killFtsm1());
     Vtn_Nivel1->draw(GetSprPacman());
+
 
     Vtn_Nivel1->display();
 }
@@ -163,7 +170,7 @@ void Nivel1::Ciclar() {
         //cout<<"Tiempo poder activo= "<<tiempoPoderactivo->asSeconds()<<" segundos"<<endl;
        // cout<<"Reloj poder activo= "<<relojPoderactivo->getElapsedTime().asSeconds()<<" segundos"<<endl;
         Poder_Activo(VulnerabilidadFtsm1);
-        RespawnFtsm1(Tiempo_SpawnFtsm1, (Vector2<int> &&) GetFtsm1().getPosition(), vPosiciones, 252);
+        RespawnFtsm1(Tiempo_SpawnFtsm1,*reloj_spawnFtsm, coord_posFtsm1 ,vPosiciones, indice_randomSpawnFtsm1 );
         Renderizar();
         txt_Vidasint->setString(to_string(Get_NumVidasPM()) + " x"); ///actualiza el numero de vidas
 
@@ -273,7 +280,12 @@ void Nivel1::Colisiones() {
             }
         }else{
             Tiempo_SpawnFtsm1 = true;
+            reloj_spawnFtsm->restart();
+            indice_randomSpawnFtsm1= rand()% vPosiciones.size();
+            coord_posFtsm1 = {GetFtsm1().getPosition().x,GetFtsm1().getPosition().y};
+            RespawnFtsm1(Tiempo_SpawnFtsm1,*reloj_spawnFtsm, coord_posFtsm1 , vPosiciones, indice_randomSpawnFtsm1);
             cout<<"Totalmente inmune" << endl;
+            VulnerabilidadFtsm1 = false;
         }
     }
 }

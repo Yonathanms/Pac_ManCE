@@ -23,6 +23,7 @@ Fantasma1::Fantasma1() {
     txtr_killftsm1 = new Texture;
     txtr_killftsm1->loadFromFile("../Recursos/FtsmKill.png");
     sprt_killftsm1->setTexture(*txtr_killftsm1);
+    //sprt_killftsm1->setPosition(100,200);
     sprt_killftsm1->setOrigin(19,19);
 
 
@@ -75,23 +76,23 @@ void Fantasma1::SetFrameFtsm1(bool vulnerabilidad) {
     }
 }
 
-///falta terminar esta funcion
-void Fantasma1::RespawnFtsm1(bool kill_ftsm, Vector2i PosFtsm, vector <Vector2i> PosCeldas, int num_celdas) {
-    *tiempo_spawnFtsm1 = reloj_spawnFtsm1->getElapsedTime();
-    if (kill_ftsm == true) {
-        cout << reloj_spawnFtsm1 << " reloj" << endl;
-        cout << tiempo_spawnFtsm1->asSeconds() << " tiempo" << endl;
-        if (tiempo_spawnFtsm1->asSeconds() <= 5) {
-            sprt_killftsm1->setPosition(PosFtsm.x, PosFtsm.y);
-            sprt_ftsm1->setPosition(-100, -100);
+///falta terminar esta funciona
+void Fantasma1::RespawnFtsm1(bool Ftsm_herido,Clock relojinicial,Vector2f coord_posFtsm1, vector <Vector2i> PosCeldas, int num_random) {
+    if (Ftsm_herido == true) {
+        *tiempo_spawnFtsm1 = relojinicial.getElapsedTime();
+        if (tiempo_spawnFtsm1->asSeconds() < 5.1) {
+            sprt_killftsm1->setPosition(coord_posFtsm1.x, coord_posFtsm1.y);
+            cout<<sprt_killftsm1->getPosition().x<<"x ,"<<sprt_killftsm1->getPosition().y<<"y" <<endl;
+            cout <<"Tiempo de carga SPAWN = "<< tiempo_spawnFtsm1->asSeconds() <<"segundos"<< endl;
+            sprt_ftsm1->setPosition(-100,-100);
         }
-        if (tiempo_spawnFtsm1->asSeconds() >= 5) {
-            int indice_random = rand() % num_celdas;
-            sprt_killftsm1->setPosition(-100, -100);
-            sprt_ftsm1->setPosition(PosCeldas[indice_random].x, PosCeldas[indice_random].y);
+        if(tiempo_spawnFtsm1->asSeconds() > 5){
+            sprt_killftsm1->setPosition(-100,-100);
+            sprt_ftsm1->setPosition(PosCeldas[num_random].x,PosCeldas[num_random].y);
         }
-    } else{
-        reloj_spawnFtsm1->restart();
     }
 }
 
+Sprite Fantasma1::GetSprt_killFtsm1() {
+    return *sprt_killftsm1;
+}
