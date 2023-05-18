@@ -14,7 +14,6 @@ Nivel1::Nivel1() {
     relojFramePU = new Clock;
     tiempoPoderactivo = new Time;
     relojPoderactivo = new Clock;
-    tiempo_spawnFtsm = new Time;
     reloj_spawnFtsm = new Clock;
 
     num_puntuacion_total = 0;
@@ -33,7 +32,7 @@ Nivel1::Nivel1() {
     txtr_PM_vidas->loadFromFile("../Recursos/PacManKill.png");
     sprt_PM_vidas->setTexture(*txtr_PM_vidas);
     sprt_PM_vidas->setPosition(695,14);
- //   sprt_PM_vidas->setOrigin(20,20);
+
 
 
     txtr_fondoV1 = new Texture;
@@ -104,17 +103,44 @@ Nivel1::Nivel1() {
 
     vPosicion_punto_y = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28}; ///representan las filas donde apareceran los puntos
 
-    while (vPosiciones.size() != 252){
+    while (vPosiciones_puntos.size() != 252){
 
-      //vPosicion_punto_x.erase(vPosicion_punto_x.begin());
-      vPosiciones.push_back({98+30*vPosicion_punto_x[0] ,103+30*vPosicion_punto_y[0]});
+      vPosiciones_puntos.push_back({98+30*vPosicion_punto_x[0] ,103+30*vPosicion_punto_y[0]});
       vPosicion_punto_x.erase(vPosicion_punto_x.begin());
       if (vPosicion_punto_x[0]>=vPosicion_punto_x[1]){
-          vPosiciones.push_back({98+30*vPosicion_punto_x[0] ,103+30*vPosicion_punto_y[0]});
+          vPosiciones_puntos.push_back({98+30*vPosicion_punto_x[0] ,103+30*vPosicion_punto_y[0]});
           vPosicion_punto_x.erase(vPosicion_punto_x.begin());
           vPosicion_punto_y.erase(vPosicion_punto_y.begin());
           }
     }
+
+    ///////////
+    vPosicion_celda_x = {0,1,2,3,4,5,6,7,8,9,10,11,14,15,16,17,18,19,20,21,22,23,24,25,0,5,11,14,20,25,
+                        0,5,11,14,20,25,0,5,11,14,20,25,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
+                        17,18,19,20,21,22,23,24,25,0,5,8,17,20,25,0,5,8,17,20,25,0,1,2,3,4,5,8,9,
+                        10,11,14,15,16,17,20,21,22,23,24,25,5,11,14,20,5,11,14,20,5,8,9,10,11,12,13,14,
+                        15,16,17,20,5,8,12,13,17,20,5,8,10,11,12,13,14,15,17,20,0,1,2,3,4,5,6,7,8,10,11,
+                        12,13,14,15,17,18,19,20,21,22,23,24,25,5,8,10,11,12,13,14,15,17,20,5,8,17,20,5,
+                        8,9,10,11,12,13,14,15,16,17,20,5,8,17,20,5,8,17,20,0,1,2,3,4,5,6,7,8,9,10,11,14,
+                        15,16,17,18,19,20,21,22,23,24,25,0,5,11,14,20,25,0,5,11,14,20,25,0,1,2,5,6,7,8,9,
+                        10,11,12,13,14,15,16,17,18,19,20,23,24,25,2,5,8,17,20,23,2,5,8,17,20,23,0,1,2,3,
+                        4,5,8,9,10,11,14,15,16,17,20,21,22,23,24,25,0,11,14,25,0,11,14,25,0,1,2,3,4,5,6,7,
+                        8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
+    //celda y
+    vPosicion_celda_y = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28};
+    //celdas x y y
+    while (vPosiciones_celdas.size() != 318){
+        vPosiciones_celdas.push_back({98+30*vPosicion_celda_x[0] ,103+30*vPosicion_celda_y[0]});
+        vPosicion_celda_x.erase(vPosicion_celda_x.begin());
+        // cout << vPosicionCelda_xy[0].x<<vPosicionCelda_xy[0].y << endl;
+        if (vPosicion_celda_x[0]>=vPosicion_celda_x[1]){
+            vPosiciones_celdas.push_back({98+30*vPosicion_celda_x[0] ,103+30*vPosicion_celda_y[0]});
+            vPosicion_celda_x.erase(vPosicion_celda_x.begin());
+            vPosicion_celda_y.erase(vPosicion_celda_y.begin());
+        }
+    }
+
+    //////////
 
 
     vPos_xPU = {0,25};
@@ -125,11 +151,12 @@ Nivel1::Nivel1() {
     /// posiciona todos los puntos del mapa con el vector de posiciones
     for (auto& sprt_punto1 : vSprites ){
         if(indice_posicion<252){
-            sprt_punto1.setPosition(vPosiciones[indice_posicion].x,vPosiciones[indice_posicion].y);
+            sprt_punto1.setPosition(vPosiciones_puntos[indice_posicion].x,vPosiciones_puntos[indice_posicion].y);
             indice_posicion += 1;
         }
     }
-
+    SetCeldasPosicionesFtsm1(vPosiciones_celdas);
+    SetCeldasPosiciones(vPosiciones_celdas);
     Ciclar();
 
 }
@@ -150,7 +177,6 @@ void Nivel1::Renderizar() {
     Vtn_Nivel1->draw(*sprt_PowerUp);
     Vtn_Nivel1->draw(*txt_Vidasint);
     Vtn_Nivel1->draw(*sprt_PM_vidas);
-  //  Vtn_Nivel1->draw(GetSprt_killFtsm1());
     Vtn_Nivel1->draw(GetFtsm1());
     Vtn_Nivel1->draw(GetSprt_killFtsm1());
     Vtn_Nivel1->draw(GetSprPacman());
@@ -166,11 +192,9 @@ void Nivel1::Ciclar() {
         SetFramePU(num_framePU);
         Power_up(MostrarPU);
         SetFrameFtsm1(VulnerabilidadFtsm1);
-      //  cout<< "Vulnerabilidad " << VulnerabilidadFtsm1 << endl;
-        //cout<<"Tiempo poder activo= "<<tiempoPoderactivo->asSeconds()<<" segundos"<<endl;
-       // cout<<"Reloj poder activo= "<<relojPoderactivo->getElapsedTime().asSeconds()<<" segundos"<<endl;
         Poder_Activo(VulnerabilidadFtsm1);
-        RespawnFtsm1(Tiempo_SpawnFtsm1,*reloj_spawnFtsm, coord_posFtsm1 ,vPosiciones, indice_randomSpawnFtsm1 );
+        RespawnFtsm1(Tiempo_SpawnFtsm1,*reloj_spawnFtsm, coord_posFtsm1 ,indice_randomSpawnFtsm1 );
+        MoveFtsm1(false, GetSprPacman().getPosition());
         Renderizar();
         txt_Vidasint->setString(to_string(Get_NumVidasPM()) + " x"); ///actualiza el numero de vidas
 
@@ -189,7 +213,6 @@ void Nivel1::Eventos() {
 
             case Event::KeyPressed:
                 if (Keyboard::isKeyPressed(Keyboard::W)) {
-                   // MovePM(0, movePM);
                     MovePM(0);
                     SetFrame(num_framePM);
                     num_framePM++;
@@ -238,8 +261,6 @@ void Nivel1::Colisiones() {
                 num_comparacionPU+=10;
                 vSprites.erase(vSprites.begin() + i);
                 txt_Puntajeint->setString(to_string(num_puntuacion_total+=10));
-              //  cout << "num_comparacion = " << num_comparacionPU << " eliminado" << endl;
-                //cout << vSprites.size() << endl;
 
                 if (num_comparacionPU==200){
                     pos_xPU = rand() % 2-0;
@@ -264,7 +285,6 @@ void Nivel1::Colisiones() {
         VulnerabilidadFtsm1 = true;
         num_comparacionPU = 0;
         relojPoderactivo->restart();
-       // cout<< "Vulnerabilidad " << VulnerabilidadFtsm1 << endl;
 
 
     }
@@ -273,19 +293,20 @@ void Nivel1::Colisiones() {
         if(VulnerabilidadFtsm1 == false){
             if(Reduccion_VidasPM(VulnerabilidadFtsm1) > 0){
                 cout << "xd"<<endl;
-                SetNewPosition_PM(VulnerabilidadFtsm1, vPosiciones,252);
+                SetNewPosition_PM(VulnerabilidadFtsm1);
             } else{
                 cout<< "GAME OVER"<<endl;
                 Vtn_Nivel1->close();
             }
         }else{
+            num_comparacionPU+=50;
+            txt_Puntajeint->setString(to_string(num_puntuacion_total+=50));
             Tiempo_SpawnFtsm1 = true;
             reloj_spawnFtsm->restart();
-            indice_randomSpawnFtsm1= rand()% vPosiciones.size();
+            indice_randomSpawnFtsm1= rand()% vPosiciones_puntos.size();
             coord_posFtsm1 = {GetFtsm1().getPosition().x,GetFtsm1().getPosition().y};
-            RespawnFtsm1(Tiempo_SpawnFtsm1,*reloj_spawnFtsm, coord_posFtsm1 , vPosiciones, indice_randomSpawnFtsm1);
+            RespawnFtsm1(Tiempo_SpawnFtsm1,*reloj_spawnFtsm, coord_posFtsm1 , indice_randomSpawnFtsm1);
             cout<<"Totalmente inmune" << endl;
-            VulnerabilidadFtsm1 = false;
         }
     }
 }
@@ -324,8 +345,7 @@ void Nivel1::Power_up(bool mostrar) {
 void Nivel1::Poder_Activo(bool poderactivo) {
     if(poderactivo== true){
         *tiempoPoderactivo = relojPoderactivo->getElapsedTime();
-        if (tiempoPoderactivo->asSeconds()>=12){
-           // cout<<"holaaaaaa"<<endl;
+        if (tiempoPoderactivo->asSeconds()>=7){
             VulnerabilidadFtsm1 = false;
         }
     }

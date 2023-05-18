@@ -35,7 +35,6 @@ private:
     Clock *relojFramePU;
     Time *tiempoPoderactivo;
     Clock *relojPoderactivo;
-    Time *tiempo_spawnFtsm;
     Clock *reloj_spawnFtsm;
 
 
@@ -61,9 +60,12 @@ private:
     Vector2f coord_posFtsm1;
 
     vector <Sprite> vSprites;
-    vector <Vector2i> vPosiciones;
+    vector <Vector2i> vPosiciones_puntos;
+    vector <Vector2i> vPosiciones_celdas;
     vector <int> vPosicion_punto_x;
     vector <int> vPosicion_punto_y;
+    vector <int> vPosicion_celda_x;
+    vector <int> vPosicion_celda_y;
     vector <int> vPos_xPU;
     vector <int> vPos_yPU;
 

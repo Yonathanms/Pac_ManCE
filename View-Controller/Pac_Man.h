@@ -22,17 +22,16 @@ public:
     bool PuedeMoverse(const Vector2i &posicionActual, const vector<Vector2i> &celdasPermitidas, Vector2i coordenadas_move);
     int Reduccion_VidasPM(bool defensa);
     int Get_NumVidasPM();
-    void SetNewPosition_PM(bool kill, vector<Vector2i> Posiciones, int num_celdas);
+    void SetNewPosition_PM(bool kill);
+    void SetCeldasPosiciones(vector<Vector2i> celdas);
 
 private:
     Sprite *spr_PacMan;
     Texture *txtr_PacMan;
-
-    vector <int> vPosicionCelda_x;
-    vector <int> vPosicionCelda_y;
     vector <Vector2i> vPosicionCelda_xy;
 
     int num_vidasPM;
+
 };
 
 
