@@ -22,6 +22,8 @@ public:
     void SetFramePU(int num_frames);
     void Power_up(bool mostrar);
     void Poder_Activo(bool poderactivo);
+    void Direccion_MovePacMan(int num_direction);
+
 
 
 
@@ -36,6 +38,8 @@ private:
     Time *tiempoPoderactivo;
     Clock *relojPoderactivo;
     Clock *reloj_spawnFtsm;
+    Time *tiempo_movePM;
+    Clock *reloj_movePM;
 
 
     //----------
@@ -69,6 +73,8 @@ private:
     vector <int> vPos_xPU;
     vector <int> vPos_yPU;
 
+    int num_direccionPM;
+    int num_validarmovimientoPM;
     int indice_posicion;
     int num_puntuacion_total;
     int num_framePM;

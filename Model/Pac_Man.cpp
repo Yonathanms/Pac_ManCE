@@ -38,8 +38,11 @@ bool Pac_Man::PuedeMoverse(const Vector2i & posicionActual, const vector<Vector2
     Vector2i nuevaPosicion1 = posicionActual + coordenadas_move;
     Vector2i nuevaPosicion2 = posicionActual + coordenadas_move*2;
     Vector2i nuevaPosicion3 = posicionActual + coordenadas_move*3;
+    Vector2i nuevaPosicion4 = posicionActual + coordenadas_move*4;
+    Vector2i nuevaPosicion5 = posicionActual + coordenadas_move*5;
+    Vector2i nuevaPosicion6 = posicionActual + coordenadas_move*6;
     for (const auto& celda : celdasPermitidas) {
-        if (nuevaPosicion1 == celda or nuevaPosicion2 == celda or nuevaPosicion3 == celda ) {
+        if (nuevaPosicion1 == celda or nuevaPosicion2 == celda or nuevaPosicion3 == celda or nuevaPosicion4 == celda or nuevaPosicion5 == celda or nuevaPosicion6 == celda) {
             return true;
         }
     }
@@ -51,8 +54,8 @@ void Pac_Man::MovePM(int num_direction) {
 
     if (num_direction == 0) {
         if (PuedeMoverse({static_cast<int>(spr_PacMan->getPosition().x), static_cast<int>(spr_PacMan->getPosition().y)},
-                         vPosicionCelda_xy, {0, -10}) == true) {
-            spr_PacMan->move(0, -10);
+                         vPosicionCelda_xy, {0, -5}) == true) {
+            spr_PacMan->move(0, -5);
             spr_PacMan->setRotation(270.0);
             spr_PacMan->setScale(1.0f, 1.0f);
         }
@@ -60,8 +63,8 @@ void Pac_Man::MovePM(int num_direction) {
 
     if (num_direction == 1) {
         if (PuedeMoverse({static_cast<int>(spr_PacMan->getPosition().x), static_cast<int>(spr_PacMan->getPosition().y)},
-                         vPosicionCelda_xy, {0, 10}) == true) {
-            spr_PacMan->move(0, 10);
+                         vPosicionCelda_xy, {0, 5}) == true) {
+            spr_PacMan->move(0, 5);
             spr_PacMan->setRotation(90.0);
             spr_PacMan->setScale(1.0f, 1.0f);
         }
@@ -69,8 +72,8 @@ void Pac_Man::MovePM(int num_direction) {
 
     if (num_direction == 2) {
         if (PuedeMoverse({static_cast<int>(spr_PacMan->getPosition().x), static_cast<int>(spr_PacMan->getPosition().y)},
-                         vPosicionCelda_xy, {-10, 0}) == true) {
-            spr_PacMan->move(-10, 0);
+                         vPosicionCelda_xy, {-5, 0}) == true) {
+            spr_PacMan->move(-5, 0);
             spr_PacMan->setRotation(180.0);
             spr_PacMan->setScale(1.0f, -1.0f);
         }
@@ -78,8 +81,8 @@ void Pac_Man::MovePM(int num_direction) {
 
     if (num_direction == 3) {
         if (PuedeMoverse({static_cast<int>(spr_PacMan->getPosition().x), static_cast<int>(spr_PacMan->getPosition().y)},
-                         vPosicionCelda_xy, {10, 0}) == true) {
-            spr_PacMan->move(10, 0);
+                         vPosicionCelda_xy, {5, 0}) == true) {
+            spr_PacMan->move(5, 0);
             spr_PacMan->setRotation(0.0);
             spr_PacMan->setScale(1.0f, 1.0f);
         }

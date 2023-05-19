@@ -45,8 +45,11 @@ bool Fantasma1::PuedeMoverse(const Vector2i &posicionActual, const vector<Vector
     Vector2i nuevaPosicion1 = posicionActual + coordenadas_move;
     Vector2i nuevaPosicion2 = posicionActual + coordenadas_move*2;
     Vector2i nuevaPosicion3 = posicionActual + coordenadas_move*3;
+    Vector2i nuevaPosicion4 = posicionActual + coordenadas_move*4;
+    Vector2i nuevaPosicion5 = posicionActual + coordenadas_move*5;
+    Vector2i nuevaPosicion6 = posicionActual + coordenadas_move*6;
     for (const auto& celda : celdasPermitidas) {
-        if (nuevaPosicion1 == celda or nuevaPosicion2 == celda or nuevaPosicion3 == celda ) {
+        if (nuevaPosicion1 == celda or nuevaPosicion2 == celda or nuevaPosicion3 == celda or nuevaPosicion4 == celda or nuevaPosicion5 == celda or nuevaPosicion6 == celda) {
             return true;
         }
     }
@@ -97,13 +100,14 @@ void Fantasma1::SetFrameFtsm1(bool vulnerabilidad) {
 void Fantasma1::RespawnFtsm1(bool Ftsm_herido,Clock relojinicial,Vector2f coord_posFtsm1,  int num_random) {
     if (Ftsm_herido == true) {
         *tiempo_spawnFtsm1 = relojinicial.getElapsedTime();
-        if (tiempo_spawnFtsm1->asSeconds() < 5.1) {
+        if (tiempo_spawnFtsm1->asSeconds() < 5) {
             sprt_killftsm1->setPosition(coord_posFtsm1.x, coord_posFtsm1.y);
             cout<<sprt_killftsm1->getPosition().x<<"x ,"<<sprt_killftsm1->getPosition().y<<"y" <<endl;
             cout <<"Tiempo de carga SPAWN = "<< tiempo_spawnFtsm1->asSeconds() <<"segundos"<< endl;
             sprt_ftsm1->setPosition(-100,-100);
         }
-        if(tiempo_spawnFtsm1->asSeconds() > 5){
+        if(tiempo_spawnFtsm1->asSeconds() > 5.1 and tiempo_spawnFtsm1->asSeconds()<5.3){
+            cout <<"Tiempo de carga SPAWN = "<< tiempo_spawnFtsm1->asSeconds() <<"segundos"<< endl;
             sprt_killftsm1->setPosition(-100,-100);
             sprt_ftsm1->setPosition(vPosicionesCelda_xy[num_random].x,vPosicionesCelda_xy[num_random].y);
         }
@@ -116,32 +120,32 @@ void Fantasma1::MoveFtsm1(bool PU_activo, Vector2f posPM) {
     } else{
         if (direccion_move == 0){
             if (PuedeMoverse({static_cast<int>(sprt_ftsm1->getPosition().x), static_cast<int>(sprt_ftsm1->getPosition().y)}, vPosicionesCelda_xy,
-                             {0,-10})){
-                sprt_ftsm1->move(0,-10);
+                             {0,-5})){
+                sprt_ftsm1->move(0,-5);
             } else{
                 direccion_move = rand()% 4-0;
             }
         }
         if (direccion_move == 1){
             if (PuedeMoverse({static_cast<int>(sprt_ftsm1->getPosition().x), static_cast<int>(sprt_ftsm1->getPosition().y)}, vPosicionesCelda_xy,
-                             {10,0})){
-                sprt_ftsm1->move(10,0);
+                             {5,0})){
+                sprt_ftsm1->move(5,0);
             } else{
                 direccion_move = rand()% 4-0;
             }
         }
         if (direccion_move == 2){
             if (PuedeMoverse({static_cast<int>(sprt_ftsm1->getPosition().x), static_cast<int>(sprt_ftsm1->getPosition().y)}, vPosicionesCelda_xy,
-                             {0,10})){
-                sprt_ftsm1->move(0,10);
+                             {0,5})){
+                sprt_ftsm1->move(0,5);
             } else{
                 direccion_move = rand()% 4-0;
             }
         }
         if (direccion_move == 3){
             if (PuedeMoverse({static_cast<int>(sprt_ftsm1->getPosition().x), static_cast<int>(sprt_ftsm1->getPosition().y)}, vPosicionesCelda_xy,
-                             {-10,0})){
-                sprt_ftsm1->move(-10,0);
+                             {-5,0})){
+                sprt_ftsm1->move(-5,0);
             } else{
                 direccion_move = rand()% 4-0;
             }

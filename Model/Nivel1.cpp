@@ -10,6 +10,8 @@ Nivel1::Nivel1() {
     Vtn_Nivel1 = new RenderWindow(VideoMode(950,1000),"Nivel 1");
     Vtn_Nivel1->setFramerateLimit(60);
 
+    tiempo_movePM = new Time;
+    reloj_movePM = new Clock;
     tiempoFramePU = new Time;
     relojFramePU = new Clock;
     tiempoPoderactivo = new Time;
@@ -37,7 +39,7 @@ Nivel1::Nivel1() {
 
     txtr_fondoV1 = new Texture;
     sprt_fondoV1 = new Sprite;
-    txtr_fondoV1->loadFromFile("../Recursos/FondoVtn1.png");
+    txtr_fondoV1->loadFromFile("../Recursos/FondoVtn1d.png");
     sprt_fondoV1->setTexture(*txtr_fondoV1);
     sprt_fondoV1->setPosition(52,57);
 
@@ -83,6 +85,8 @@ Nivel1::Nivel1() {
     MostrarPU = false;
     VulnerabilidadFtsm1 = false;
     Tiempo_SpawnFtsm1 = false;
+    //num_validarmovimientoPM = 5;
+    //num_direccionPM = 5;
     num_framePM = 0;
     num_framePU = 0;
     num_comparacionPU = 0;
@@ -119,8 +123,8 @@ Nivel1::Nivel1() {
                         0,5,11,14,20,25,0,5,11,14,20,25,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
                         17,18,19,20,21,22,23,24,25,0,5,8,17,20,25,0,5,8,17,20,25,0,1,2,3,4,5,8,9,
                         10,11,14,15,16,17,20,21,22,23,24,25,5,11,14,20,5,11,14,20,5,8,9,10,11,12,13,14,
-                        15,16,17,20,5,8,12,13,17,20,5,8,10,11,12,13,14,15,17,20,0,1,2,3,4,5,6,7,8,10,11,
-                        12,13,14,15,17,18,19,20,21,22,23,24,25,5,8,10,11,12,13,14,15,17,20,5,8,17,20,5,
+                        15,16,17,20,5,8,12,13,17,20,5,8,12,13,17,20,0,1,2,3,4,5,6,7,8,
+                        12,13,17,18,19,20,21,22,23,24,25,5,8,12,13,17,20,5,8,17,20,5,
                         8,9,10,11,12,13,14,15,16,17,20,5,8,17,20,5,8,17,20,0,1,2,3,4,5,6,7,8,9,10,11,14,
                         15,16,17,18,19,20,21,22,23,24,25,0,5,11,14,20,25,0,5,11,14,20,25,0,1,2,5,6,7,8,9,
                         10,11,12,13,14,15,16,17,18,19,20,23,24,25,2,5,8,17,20,23,2,5,8,17,20,23,0,1,2,3,
@@ -129,7 +133,7 @@ Nivel1::Nivel1() {
     //celda y
     vPosicion_celda_y = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28};
     //celdas x y y
-    while (vPosiciones_celdas.size() != 318){
+    while (vPosiciones_celdas.size() != 306){
         vPosiciones_celdas.push_back({98+30*vPosicion_celda_x[0] ,103+30*vPosicion_celda_y[0]});
         vPosicion_celda_x.erase(vPosicion_celda_x.begin());
         // cout << vPosicionCelda_xy[0].x<<vPosicionCelda_xy[0].y << endl;
@@ -189,12 +193,26 @@ void Nivel1::Ciclar() {
     while (Vtn_Nivel1->isOpen()){
         Colisiones();
         Eventos();
+        MovePM(num_direccionPM);
+
+        *tiempo_movePM = reloj_movePM->getElapsedTime();
+        if (tiempo_movePM->asMilliseconds() > 40) {
+            SetFrame(num_framePM);
+            num_framePM++;
+            if (num_framePM == 5) {
+                num_framePM = 0;
+            }
+        }if(tiempo_movePM->asMilliseconds() > 41){
+            reloj_movePM->restart();
+        }
+        Direccion_MovePacMan(num_validarmovimientoPM);
         SetFramePU(num_framePU);
         Power_up(MostrarPU);
         SetFrameFtsm1(VulnerabilidadFtsm1);
         Poder_Activo(VulnerabilidadFtsm1);
         RespawnFtsm1(Tiempo_SpawnFtsm1,*reloj_spawnFtsm, coord_posFtsm1 ,indice_randomSpawnFtsm1 );
         MoveFtsm1(false, GetSprPacman().getPosition());
+        //MovePM(num_direccionPM);
         Renderizar();
         txt_Vidasint->setString(to_string(Get_NumVidasPM()) + " x"); ///actualiza el numero de vidas
 
@@ -213,39 +231,16 @@ void Nivel1::Eventos() {
 
             case Event::KeyPressed:
                 if (Keyboard::isKeyPressed(Keyboard::W)) {
-                    MovePM(0);
-                    SetFrame(num_framePM);
-                    num_framePM++;
-                    if(num_framePM==5){
-                        num_framePM = 0;
-                    }
-
-
-
+                    num_validarmovimientoPM = 0;
                 }
                 else if (Keyboard::isKeyPressed(Keyboard::S)){
-                    MovePM(1);
-                    SetFrame(num_framePM);
-                    num_framePM++;
-                    if(num_framePM==5){
-                        num_framePM = 0;
-                    }
+                    num_validarmovimientoPM = 1;
                 }
                 else if (Keyboard::isKeyPressed(Keyboard::A)) {
-                    MovePM(2);
-                    SetFrame(num_framePM);
-                    num_framePM++;
-                    if(num_framePM==5){
-                        num_framePM = 0;
-                    }
+                    num_validarmovimientoPM = 2;
                 }
                 else if (Keyboard::isKeyPressed(Keyboard::D)){
-                    MovePM(3);
-                    SetFrame(num_framePM);
-                    num_framePM++;
-                    if(num_framePM==5){
-                        num_framePM = 0;
-                    }
+                    num_validarmovimientoPM = 3;
                 }
         }
     }
@@ -345,8 +340,71 @@ void Nivel1::Power_up(bool mostrar) {
 void Nivel1::Poder_Activo(bool poderactivo) {
     if(poderactivo== true){
         *tiempoPoderactivo = relojPoderactivo->getElapsedTime();
-        if (tiempoPoderactivo->asSeconds()>=7){
+        if (tiempoPoderactivo->asSeconds()>=10){
             VulnerabilidadFtsm1 = false;
+        }
+    }
+}
+
+void Nivel1::Direccion_MovePacMan(int num_direction) {
+    if (num_direction == 0){
+        Vector2i coordenadas_move = {0,-5};
+        Vector2i nuevaPosicion = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*1,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*1};
+        Vector2i nuevaPosicion2 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*1,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*2};
+        Vector2i nuevaPosicion3 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*1,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*3};
+        Vector2i nuevaPosicion4 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*1,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*4};
+        Vector2i nuevaPosicion5 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*1,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*5};
+        Vector2i nuevaPosicion6 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*1,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*6};
+
+        for (const auto& celda : vPosiciones_celdas){
+            if (nuevaPosicion == celda or nuevaPosicion2 == celda or nuevaPosicion3 == celda or nuevaPosicion4 == celda or nuevaPosicion5 == celda or nuevaPosicion6 == celda){
+                num_direccionPM = 0;
+            }
+        }
+    }
+    if (num_direction == 1){
+        Vector2i coordenadas_move = {0,5};
+        Vector2i nuevaPosicion = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*1,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*1};
+        Vector2i nuevaPosicion2 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*1,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*2};
+        Vector2i nuevaPosicion3 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*1,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*3};
+        Vector2i nuevaPosicion4 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*1,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*4};
+        Vector2i nuevaPosicion5 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*1,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*5};
+        Vector2i nuevaPosicion6 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*1,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*6};
+
+        for (const auto& celda : vPosiciones_celdas){
+            if (nuevaPosicion == celda or nuevaPosicion2 == celda or nuevaPosicion3 == celda or nuevaPosicion4 == celda or nuevaPosicion5 == celda or nuevaPosicion6 == celda){
+                num_direccionPM = 1;
+            }
+        }
+    }
+    if (num_direction == 2){
+        Vector2i coordenadas_move = {-5,0};
+        Vector2i nuevaPosicion = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*1,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*1};
+        Vector2i nuevaPosicion2 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*2,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*2};
+        Vector2i nuevaPosicion3 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*3,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*3};
+        Vector2i nuevaPosicion4 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*4,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*4};
+        Vector2i nuevaPosicion5 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*5,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*5};
+        Vector2i nuevaPosicion6 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*6,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*6};
+
+        for (const auto& celda : vPosiciones_celdas){
+            if (nuevaPosicion == celda or nuevaPosicion2 == celda or nuevaPosicion3 == celda or nuevaPosicion4 == celda or nuevaPosicion5 == celda or nuevaPosicion6 == celda){
+                num_direccionPM = 2;
+            }
+        }
+    }
+    if (num_direction == 3){
+        Vector2i coordenadas_move = {5,0};
+        Vector2i nuevaPosicion = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*1,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*1};
+        Vector2i nuevaPosicion2 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*2,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*2};
+        Vector2i nuevaPosicion3 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*3,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*3};
+        Vector2i nuevaPosicion4 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*4,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*4};
+        Vector2i nuevaPosicion5 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*5,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*5};
+        Vector2i nuevaPosicion6 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*6,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*6};
+
+        for (const auto& celda : vPosiciones_celdas){
+            if (nuevaPosicion == celda or nuevaPosicion2 == celda or nuevaPosicion3 == celda or nuevaPosicion4 == celda or nuevaPosicion5 == celda or nuevaPosicion6 == celda){
+                num_direccionPM = 3;
+            }
         }
     }
 }
