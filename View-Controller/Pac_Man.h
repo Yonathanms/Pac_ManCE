@@ -3,10 +3,8 @@
 //
 
 #ifndef PAC_MAN_PAC_MAN_H
-#include "cmath"
 #include "SFML/Graphics.hpp"
 #include "iostream"
-#include "numeric"
 #include "vector"
 #define PAC_MAN_PAC_MAN_H
 
@@ -19,7 +17,7 @@ public:
     Sprite GetSprPacman();
     void SetFrame( int num_frame);
     void MovePM(int num_direction);
-    bool PuedeMoverse(const Vector2i &posicionActual, const vector<Vector2i> &celdasPermitidas, Vector2i coordenadas_move);
+    bool PuedeMoverse( Vector2i posicionActual,  vector<Vector2i> celdasPermitidas, Vector2i coordenadas_move);
     int Reduccion_VidasPM(bool defensa);
     int Get_NumVidasPM();
     void SetNewPosition_PM(bool kill);

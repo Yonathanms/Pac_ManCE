@@ -27,10 +27,12 @@ Fantasma1::Fantasma1() {
 
     num_frameFtsm1 = 0;
     direccion_move = 0;
+
 }
 
 void Fantasma1::SetCeldasPosicionesFtsm1(vector<Vector2i> celdas) {
     vPosicionesCelda_xy = celdas;
+//    Set_CeldasMapa(vPosicionesCelda_xy);
 }
 
 Sprite Fantasma1::GetSprt_killFtsm1() {
@@ -41,7 +43,7 @@ Sprite Fantasma1::GetFtsm1() {
     return *sprt_ftsm1;
 }
 
-bool Fantasma1::PuedeMoverse(const Vector2i &posicionActual, const vector<Vector2i> &celdasPermitidas,Vector2i coordenadas_move) {
+bool Fantasma1::PuedeMoverse(Vector2i posicionActual,  vector<Vector2i> celdasPermitidas,Vector2i coordenadas_move) {
     Vector2i nuevaPosicion1 = posicionActual + coordenadas_move;
     Vector2i nuevaPosicion2 = posicionActual + coordenadas_move*2;
     Vector2i nuevaPosicion3 = posicionActual + coordenadas_move*3;
@@ -114,8 +116,9 @@ void Fantasma1::RespawnFtsm1(bool Ftsm_herido,Clock relojinicial,Vector2f coord_
     }
 }
 
-void Fantasma1::MoveFtsm1(bool PU_activo, Vector2f posPM) {
+void Fantasma1::MoveFtsm1(bool PU_activo, Vector2f posPM, Vector2f posicion_PU) {
     if (PU_activo == true){
+        //MovimientoPathfinding(posicio);
 
     } else{
         if (direccion_move == 0){
@@ -152,6 +155,8 @@ void Fantasma1::MoveFtsm1(bool PU_activo, Vector2f posPM) {
         }
     }
 }
+
+
 
 
 

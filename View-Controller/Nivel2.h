@@ -1,19 +1,21 @@
 //
-// Created by yonathanms on 25/04/23.
+// Created by yonathanms on 19/05/23.
 //
 
-#ifndef PAC_MAN_NIVEL1_H
+#ifndef PAC_MAN_NIVEL2_H
 #include "SFML/Graphics.hpp"
 #include "../View-Controller/Pac_Man.h"
 #include "../View-Controller/Fantasma1.h"
 #include "vector"
-#define PAC_MAN_NIVEL1_H
+#define PAC_MAN_NIVEL2_H
 
 using namespace sf;
 
-class Nivel1: public Pac_Man, public Fantasma1{
+class Nivel2: public Pac_Man, public Fantasma1 {
+
 public:
-    Nivel1();
+
+    Nivel2(int puntos_obtenidos);
     void Renderizar();
     void Ciclar();
     void Eventos();
@@ -22,11 +24,6 @@ public:
     void Power_up(bool mostrar);
     void Poder_Activo(bool poderactivo);
     void Direccion_MovePacMan(int num_direction);
-
-
-
-
-
 
 private:
     RenderWindow *Vtn_Nivel1;
@@ -41,7 +38,6 @@ private:
     Clock *reloj_movePM;
 
 
-    //----------
     Sprite *sprt_fondoV1;
     Texture *txtr_fondoV1;
 
@@ -88,4 +84,5 @@ private:
 };
 
 
-#endif //PAC_MAN_NIVEL1_H
+
+#endif //PAC_MAN_NIVEL2_H

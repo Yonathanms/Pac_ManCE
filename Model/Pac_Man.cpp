@@ -34,7 +34,7 @@ void Pac_Man::SetFrame( int num_frame) {
 }
 
 
-bool Pac_Man::PuedeMoverse(const Vector2i & posicionActual, const vector<Vector2i>& celdasPermitidas, Vector2i coordenadas_move) {
+bool Pac_Man::PuedeMoverse( Vector2i  posicionActual,  vector<Vector2i> celdasPermitidas, Vector2i coordenadas_move) {
     Vector2i nuevaPosicion1 = posicionActual + coordenadas_move;
     Vector2i nuevaPosicion2 = posicionActual + coordenadas_move*2;
     Vector2i nuevaPosicion3 = posicionActual + coordenadas_move*3;
@@ -112,6 +112,8 @@ void Pac_Man::SetNewPosition_PM(bool kill) {
        spr_PacMan->setPosition(vPosicionCelda_xy[indice_posrandom].x,vPosicionCelda_xy[indice_posrandom].y);
     }
 }
+
+
 
 
 
