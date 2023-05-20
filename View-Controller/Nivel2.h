@@ -6,16 +6,16 @@
 #include "SFML/Graphics.hpp"
 #include "../View-Controller/Pac_Man.h"
 #include "../View-Controller/Fantasma1.h"
+#include "../View-Controller/Fantasma2.h"
 #include "vector"
+#include "Fantasma2.h"
+
+
 #define PAC_MAN_NIVEL2_H
 
-using namespace sf;
-
-class Nivel2: public Pac_Man, public Fantasma1 {
-
+class Nivel2: public Pac_Man, public Fantasma1, public Fantasma2{
 public:
-
-    Nivel2(int puntos_obtenidos);
+    Nivel2(int puntaje_obtenido);
     void Renderizar();
     void Ciclar();
     void Eventos();
@@ -25,8 +25,13 @@ public:
     void Poder_Activo(bool poderactivo);
     void Direccion_MovePacMan(int num_direction);
 
+
+
+
+
+
 private:
-    RenderWindow *Vtn_Nivel1;
+    RenderWindow *Vtn_Nivel2;
     Event *events;
 
     Time *tiempoFramePU;
@@ -34,10 +39,12 @@ private:
     Time *tiempoPoderactivo;
     Clock *relojPoderactivo;
     Clock *reloj_spawnFtsm;
+    Clock *reloj_spawnFtsm2;
     Time *tiempo_movePM;
     Clock *reloj_movePM;
 
 
+    //----------
     Sprite *sprt_fondoV1;
     Texture *txtr_fondoV1;
 
@@ -57,6 +64,7 @@ private:
     Text *txt_Vidasint;
 
     Vector2f coord_posFtsm1;
+    Vector2f coord_posFtsm2;
 
     vector <Sprite> vSprites;
     vector <Vector2i> vPosiciones_puntos;
@@ -77,12 +85,13 @@ private:
     int pos_xPU;
     int pos_yPU;
     int indice_randomSpawnFtsm1;
+    int indice_randomSpawnFtsm2;
     int num_comparacionPU;
     bool MostrarPU;
-    bool VulnerabilidadFtsm1;
+    bool VulnerabilidadFtsm;
     bool Tiempo_SpawnFtsm1;
+    bool Tiempo_SpawnFtsm2;
 };
-
 
 
 #endif //PAC_MAN_NIVEL2_H

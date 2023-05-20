@@ -20,7 +20,7 @@ public:
     void  SetFrameFtsm1(bool vulnerabilidad);
     void RespawnFtsm1(bool Ftsm_herido,Clock relojinicial,Vector2f coord_posFtsm1,  int num_random);
     void SetCeldasPosicionesFtsm1(vector<Vector2i> celdas);
-    void MoveFtsm1(bool PU_activo, Vector2f posPM, Vector2f posicion_PU);
+    void MoveFtsm1(bool PU_activo, Vector2f posPM);
     bool PuedeMoverse( Vector2i posicionActual,  vector<Vector2i> celdasPermitidas, Vector2i coordenadas_move);
 private:
 

@@ -116,7 +116,7 @@ void Fantasma1::RespawnFtsm1(bool Ftsm_herido,Clock relojinicial,Vector2f coord_
     }
 }
 
-void Fantasma1::MoveFtsm1(bool PU_activo, Vector2f posPM, Vector2f posicion_PU) {
+void Fantasma1::MoveFtsm1(bool PU_activo, Vector2f posPM) {
     if (PU_activo == true){
         //MovimientoPathfinding(posicio);
 

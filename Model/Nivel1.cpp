@@ -7,6 +7,7 @@
 
 
 Nivel1::Nivel1() {
+    /// funcionando
     Vtn_Nivel1 = new RenderWindow(VideoMode(950,1000),"Nivel 1");
     Vtn_Nivel1->setFramerateLimit(60);
 
@@ -91,54 +92,50 @@ Nivel1::Nivel1() {
     indice_randomSpawnFtsm1 = 0;
     coord_posFtsm1 = {-20.0,-20.0};
 
-    vPos_xPU = {0,25};
-    vPos_yPU = {0,28};
-    indice_posicion = 0;
-
-
     vSprites = {252,*sprt_punto1};
 
     vPosicion_punto_x = {1,2,3,4,5,6,7,8,9,10,11,14,15,16,17,18,19,20,21,22,23,24,0,5,11,14,20,25,
-                       0,5,11,14,20,25,0,5,11,14,20,25,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
-                       17,18,19,20,21,22,23,24,25,0,5,8,17,20,25,0,5,8,17,20,25,0,1,2,3,4,5,8,9,
-                       10,11,14,15,16,17,20,21,22,23,24,25,5,20,5,20,5,20,5,20,5,20,0,1,2,3,4,5,
-                        20,21,22,23,24,25,5,20,5,20,5,20,5,20,5,20,0,1,2,3,4,5,6,7,8,9,10,11,14,15,
-                        16,17,18,19,20,21,22,23,24,25,0,5,11,14,20,25,0,5,11,14,20,25,0,1,2,5,6,7,8,
-                        9,10,11,12,13,14,15,16,17,18,19,20,23,24,25,2,5,8,17,20,23,2,5,8,17,20,23,
-                        0,1,2,3,4,5,8,9,10,11,14,15,16,17,20,21,22,23,24,25,0,11,14,25,0,11,14,25,
-                        1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};  ///representan las columnas donde apareceran los puntos
+                         0,5,11,14,20,25,0,5,11,14,20,25,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
+                         17,18,19,20,21,22,23,24,25,0,5,8,17,20,25,0,5,8,17,20,25,0,1,2,3,4,5,8,9,
+                         10,11,14,15,16,17,20,21,22,23,24,25,5,20,5,20,5,20,5,20,5,20,0,1,2,3,4,5,
+                         20,21,22,23,24,25,5,20,5,20,5,20,5,20,5,20,0,1,2,3,4,5,6,7,8,9,10,11,14,15,
+                         16,17,18,19,20,21,22,23,24,25,0,5,11,14,20,25,0,5,11,14,20,25,0,1,2,5,6,7,8,
+                         9,10,11,12,13,14,15,16,17,18,19,20,23,24,25,2,5,8,17,20,23,2,5,8,17,20,23,
+                         0,1,2,3,4,5,8,9,10,11,14,15,16,17,20,21,22,23,24,25,0,11,14,25,0,11,14,25,
+                         1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};  ///representan las columnas donde apareceran los puntos
 
     vPosicion_punto_y = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28}; ///representan las filas donde apareceran los puntos
 
     while (vPosiciones_puntos.size() != 252){
 
-      vPosiciones_puntos.push_back({98+30*vPosicion_punto_x[0] ,103+30*vPosicion_punto_y[0]});
-      vPosicion_punto_x.erase(vPosicion_punto_x.begin());
-      if (vPosicion_punto_x[0]>=vPosicion_punto_x[1]){
-          vPosiciones_puntos.push_back({98+30*vPosicion_punto_x[0] ,103+30*vPosicion_punto_y[0]});
-          vPosicion_punto_x.erase(vPosicion_punto_x.begin());
-          vPosicion_punto_y.erase(vPosicion_punto_y.begin());
-          }
+        vPosiciones_puntos.push_back({98+30*vPosicion_punto_x[0] ,103+30*vPosicion_punto_y[0]});
+        vPosicion_punto_x.erase(vPosicion_punto_x.begin());
+        if (vPosicion_punto_x[0]>=vPosicion_punto_x[1]){
+            vPosiciones_puntos.push_back({98+30*vPosicion_punto_x[0] ,103+30*vPosicion_punto_y[0]});
+            vPosicion_punto_x.erase(vPosicion_punto_x.begin());
+            vPosicion_punto_y.erase(vPosicion_punto_y.begin());
+        }
     }
 
     ///////////
     vPosicion_celda_x = {0,1,2,3,4,5,6,7,8,9,10,11,14,15,16,17,18,19,20,21,22,23,24,25,0,5,11,14,20,25,
-                        0,5,11,14,20,25,0,5,11,14,20,25,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
-                        17,18,19,20,21,22,23,24,25,0,5,8,17,20,25,0,5,8,17,20,25,0,1,2,3,4,5,8,9,
-                        10,11,14,15,16,17,20,21,22,23,24,25,5,11,14,20,5,11,14,20,5,8,9,10,11,12,13,14,
-                        15,16,17,20,5,8,12,13,17,20,5,8,12,13,17,20,0,1,2,3,4,5,6,7,8,
-                        12,13,17,18,19,20,21,22,23,24,25,5,8,12,13,17,20,5,8,17,20,5,
-                        8,9,10,11,12,13,14,15,16,17,20,5,8,17,20,5,8,17,20,0,1,2,3,4,5,6,7,8,9,10,11,14,
-                        15,16,17,18,19,20,21,22,23,24,25,0,5,11,14,20,25,0,5,11,14,20,25,0,1,2,5,6,7,8,9,
-                        10,11,12,13,14,15,16,17,18,19,20,23,24,25,2,5,8,17,20,23,2,5,8,17,20,23,0,1,2,3,
-                        4,5,8,9,10,11,14,15,16,17,20,21,22,23,24,25,0,11,14,25,0,11,14,25,0,1,2,3,4,5,6,7,
-                        8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
+                         0,5,11,14,20,25,0,5,11,14,20,25,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
+                         17,18,19,20,21,22,23,24,25,0,5,8,17,20,25,0,5,8,17,20,25,0,1,2,3,4,5,8,9,
+                         10,11,14,15,16,17,20,21,22,23,24,25,5,11,14,20,5,11,14,20,5,8,9,10,11,12,13,14,
+                         15,16,17,20,5,8,12,13,17,20,5,8,12,13,17,20,0,1,2,3,4,5,6,7,8,
+                         12,13,17,18,19,20,21,22,23,24,25,5,8,12,13,17,20,5,8,17,20,5,
+                         8,9,10,11,12,13,14,15,16,17,20,5,8,17,20,5,8,17,20,0,1,2,3,4,5,6,7,8,9,10,11,14,
+                         15,16,17,18,19,20,21,22,23,24,25,0,5,11,14,20,25,0,5,11,14,20,25,0,1,2,5,6,7,8,9,
+                         10,11,12,13,14,15,16,17,18,19,20,23,24,25,2,5,8,17,20,23,2,5,8,17,20,23,0,1,2,3,
+                         4,5,8,9,10,11,14,15,16,17,20,21,22,23,24,25,0,11,14,25,0,11,14,25,0,1,2,3,4,5,6,7,
+                         8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
     //celda y
     vPosicion_celda_y = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28};
     //celdas x y y
     while (vPosiciones_celdas.size() != 306){
         vPosiciones_celdas.push_back({98+30*vPosicion_celda_x[0] ,103+30*vPosicion_celda_y[0]});
         vPosicion_celda_x.erase(vPosicion_celda_x.begin());
+        // cout << vPosicionCelda_xy[0].x<<vPosicionCelda_xy[0].y << endl;
         if (vPosicion_celda_x[0]>=vPosicion_celda_x[1]){
             vPosiciones_celdas.push_back({98+30*vPosicion_celda_x[0] ,103+30*vPosicion_celda_y[0]});
             vPosicion_celda_x.erase(vPosicion_celda_x.begin());
@@ -146,10 +143,16 @@ Nivel1::Nivel1() {
         }
     }
 
+    //////////
+
+
+    vPos_xPU = {0,25};
+    vPos_yPU = {0,28};
+    indice_posicion = 0;
 
 
     /// posiciona todos los puntos del mapa con el vector de posiciones
-    for (auto sprt_punto1 : vSprites ){
+    for (auto& sprt_punto1 : vSprites ){
         if(indice_posicion<252){
             sprt_punto1.setPosition(vPosiciones_puntos[indice_posicion].x,vPosiciones_puntos[indice_posicion].y);
             indice_posicion += 1;
@@ -207,7 +210,7 @@ void Nivel1::Ciclar() {
         SetFrameFtsm1(VulnerabilidadFtsm1);
         Poder_Activo(VulnerabilidadFtsm1);
         RespawnFtsm1(Tiempo_SpawnFtsm1,*reloj_spawnFtsm, coord_posFtsm1 ,indice_randomSpawnFtsm1 );
-        MoveFtsm1(false, GetSprPacman().getPosition(), sprt_PowerUp->getPosition());
+        MoveFtsm1(false, GetSprPacman().getPosition());
         //MovePM(num_direccionPM);
         Renderizar();
         txt_Vidasint->setString(to_string(Get_NumVidasPM()) + " x"); ///actualiza el numero de vidas
@@ -279,12 +282,6 @@ void Nivel1::Colisiones() {
 
 
     }
-
-    if (GetFtsm1().getGlobalBounds().intersects(sprt_PowerUp->getGlobalBounds())){
-        MostrarPU = false;
-        num_comparacionPU = 0;
-    }
-
     ////////// esta funcion determina lo que sucede si interaccionan el pacman y el fantasma
     if (GetSprPacman().getGlobalBounds().intersects((GetFtsm1().getGlobalBounds()))){
         if(VulnerabilidadFtsm1 == false){
@@ -306,6 +303,12 @@ void Nivel1::Colisiones() {
             cout<<"Totalmente inmune" << endl;
         }
     }
+
+    if (GetFtsm1().getGlobalBounds().intersects(sprt_PowerUp->getGlobalBounds())){
+        MostrarPU = false;
+        num_comparacionPU = 0;
+    }
+
 }
 
 
@@ -342,7 +345,7 @@ void Nivel1::Power_up(bool mostrar) {
 void Nivel1::Poder_Activo(bool poderactivo) {
     if(poderactivo== true){
         *tiempoPoderactivo = relojPoderactivo->getElapsedTime();
-        if (tiempoPoderactivo->asSeconds()>=7){
+        if (tiempoPoderactivo->asSeconds()>=10){
             VulnerabilidadFtsm1 = false;
         }
     }
@@ -352,11 +355,11 @@ void Nivel1::Direccion_MovePacMan(int num_direction) {
     if (num_direction == 0){
         Vector2i coordenadas_move = {0,-5};
         Vector2i nuevaPosicion = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*1,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*1};
-        Vector2i nuevaPosicion2 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*2,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*2};
-        Vector2i nuevaPosicion3 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*3,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*3};
-        Vector2i nuevaPosicion4 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*4,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*4};
-        Vector2i nuevaPosicion5 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*5,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*5};
-        Vector2i nuevaPosicion6 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*6,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*6};
+        Vector2i nuevaPosicion2 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*1,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*2};
+        Vector2i nuevaPosicion3 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*1,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*3};
+        Vector2i nuevaPosicion4 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*1,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*4};
+        Vector2i nuevaPosicion5 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*1,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*5};
+        Vector2i nuevaPosicion6 = {static_cast<int>(GetSprPacman().getPosition().x) + coordenadas_move.x*1,static_cast<int>(GetSprPacman().getPosition().y) + coordenadas_move.y*6};
 
         for (const auto& celda : vPosiciones_celdas){
             if (nuevaPosicion == celda or nuevaPosicion2 == celda or nuevaPosicion3 == celda or nuevaPosicion4 == celda or nuevaPosicion5 == celda or nuevaPosicion6 == celda){
@@ -410,6 +413,7 @@ void Nivel1::Direccion_MovePacMan(int num_direction) {
         }
     }
 }
+
 
 
 

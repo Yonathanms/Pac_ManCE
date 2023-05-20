@@ -3,7 +3,7 @@
 //
 
 #include "../View-Controller/Ventana_Principal.h"
-#include "../View-Controller/Nivel1.h"
+#include "../View-Controller/Nivel2.h"
 
 Ventana_Principal::Ventana_Principal() {
 
@@ -37,7 +37,7 @@ void Ventana_Principal::Eventos() {
                     posicionmouse.y <= btnJugar->getPosition().y + btnJugar->getSize().y) {
                     std::cout << "hola ventana nueva de modo facil xd" << std::endl;
                     VentanaPrincipal->close();
-                    Nivel1();
+                    Nivel2(2500);
 
                 }
         }
